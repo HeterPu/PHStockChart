@@ -28,7 +28,7 @@ Installation
 
 1. Add `pod 'PHStockChart'` to your Podfile.
 2. Run `pod install` or `pod update`.
-3. Import \"GuPiaoView.h\".
+3. Import "GuPiaoView.h".
 
 
 ### Carthage
