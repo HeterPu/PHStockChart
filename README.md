@@ -18,8 +18,8 @@ Demo Project
 ==============
 See `PHStockChart/PHStockChart.xcodeproj`
 
-<img src="https://raw.github.com/HeterPu/PHStockChart/master/PHStockChart/demo/snapshot/fenshi.png" width="480"><br/>
-<img src="https://raw.github.com/HeterPu/PHStockChart/master/PHStockChart/demo/snapshot/lazhutu.png" width="480">
+<img src="https://raw.github.com/HeterPu/PHStockChart/master/PHStockChart/demo/snapshot/fenshi.png" width="600"><br/>
+<img src="https://raw.github.com/HeterPu/PHStockChart/master/PHStockChart/demo/snapshot/lazhutu.png" width="600">
 
 
 Installation
