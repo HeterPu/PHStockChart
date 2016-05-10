@@ -869,7 +869,6 @@
 -(void)setKDJ {
     
     
-    
 }
 
 
