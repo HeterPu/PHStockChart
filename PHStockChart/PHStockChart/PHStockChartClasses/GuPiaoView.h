@@ -95,7 +95,7 @@ typedef NS_ENUM(NSUInteger, PHLaZhuTuSubstyle) {
      */
     PHLaZhuTuSubstyleWR,
     /**
-     *  CCI样式
+     *  CCI样式,三根值为100，0，-100的虚线和一根实线组成
      */
     PHLaZhuTuSubstyleCCI,
     /**
@@ -310,12 +310,12 @@ typedef NS_ENUM(NSUInteger, PHLaZhuTuSubstyle) {
  */
 -(void)initWithWR:(NSArray *)wrarray;
 
-
-
-
-
-
-
+/**
+ *  初始化CCI数组
+ *
+ *  @param cciarray cci数组  
+ */
+-(void)initWithCCI:(NSArray *)cciarray;
 
 /**
  *  初始化PSY数组
@@ -324,8 +324,6 @@ typedef NS_ENUM(NSUInteger, PHLaZhuTuSubstyle) {
  */
 -(void)initWithPSY:(NSArray *)psyarray;
 
-
-
 /**
  *  初始化DPO数组
  *
@@ -333,8 +331,12 @@ typedef NS_ENUM(NSUInteger, PHLaZhuTuSubstyle) {
  */
 -(void)initWithDPO:(NSArray *)dpoarray;
 
-
-
+/**
+ *  初始化bollarray
+ *
+ *  @param bollarray boll数组
+ */
+-(void)initWithBOLL:(NSArray *)bollarray;
 /**
  *  初始化ASI数组
  *
@@ -342,8 +344,12 @@ typedef NS_ENUM(NSUInteger, PHLaZhuTuSubstyle) {
  */
 -(void)initWithASI:(NSArray *)asiarray;
 
-
-
+/**
+ *  初始化SAR数组
+ *
+ *  @param sararray sar数组
+ */
+-(void)initWithSAR:(NSArray *)sararray;
 
 
 
