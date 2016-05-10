@@ -40,7 +40,7 @@
     
     
     [_gupiaoV initWithChartStyle:PHChartStyleLaZhuTu];
-    _gupiaoV.laZhuTuSubStyle = PHLaZhuTuSubstyleMACD;
+    _gupiaoV.laZhuTuSubStyle = PHLaZhuTuSubstyleVR;
     
     _gupiaoV.backgroundColor = [UIColor whiteColor];
     _isFullScreen = NO;
@@ -168,9 +168,22 @@
     
     NSString *path3 = [[NSBundle mainBundle] pathForResource:@"macd" ofType:@"plist"];
     NSArray *arr3 = [[NSArray alloc] initWithContentsOfFile:path3];
-    
     [_gupiaoV initWithMACD:arr3];
-     NSLog(@"VVVVVV%@",arr1);
+    
+    
+    
+    NSString *path4 = [[NSBundle mainBundle] pathForResource:@"kdj" ofType:@"plist"];
+    NSArray *arr4 = [[NSArray alloc] initWithContentsOfFile:path4];
+    [_gupiaoV initWithKDJ:arr4];
+    [_gupiaoV initWithRSI:arr4];
+    [_gupiaoV initWithBIAS:arr4];
+    [_gupiaoV initWithDMA:arr4];
+    [_gupiaoV initWithOBV:arr4];
+    [_gupiaoV initWithROC:arr4];
+    [_gupiaoV initWithMTM:arr4];
+    [_gupiaoV initWithCR:arr4];
+    [_gupiaoV initWithBRAR:arr4];
+    [_gupiaoV initWithVR:arr4];
     
 }
 

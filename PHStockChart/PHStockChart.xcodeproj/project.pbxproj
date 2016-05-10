@@ -20,6 +20,7 @@
 		D0593C8E1CE174F10028C92B /* zhutu.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0593C8B1CE174F10028C92B /* zhutu.plist */; };
 		D0593C901CE175940028C92B /* dazhexian.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0593C8F1CE175940028C92B /* dazhexian.plist */; };
 		D0593C921CE17EB60028C92B /* macd.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0593C911CE17EB60028C92B /* macd.plist */; };
+		D0593C941CE1B0510028C92B /* kdj.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0593C931CE1B0510028C92B /* kdj.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		D0593C8B1CE174F10028C92B /* zhutu.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = zhutu.plist; sourceTree = "<group>"; };
 		D0593C8F1CE175940028C92B /* dazhexian.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = dazhexian.plist; sourceTree = "<group>"; };
 		D0593C911CE17EB60028C92B /* macd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = macd.plist; sourceTree = "<group>"; };
+		D0593C931CE1B0510028C92B /* kdj.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = kdj.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 				D0593C8B1CE174F10028C92B /* zhutu.plist */,
 				D0593C8F1CE175940028C92B /* dazhexian.plist */,
 				D0593C911CE17EB60028C92B /* macd.plist */,
+				D0593C931CE1B0510028C92B /* kdj.plist */,
 			);
 			path = resourses;
 			sourceTree = "<group>";
@@ -181,6 +184,7 @@
 				D0593C921CE17EB60028C92B /* macd.plist in Resources */,
 				D0593C8E1CE174F10028C92B /* zhutu.plist in Resources */,
 				D0593C691CE173A50028C92B /* Assets.xcassets in Resources */,
+				D0593C941CE1B0510028C92B /* kdj.plist in Resources */,
 				D0593C8C1CE174F10028C92B /* lazhutu1.plist in Resources */,
 				D0593C8D1CE174F10028C92B /* vol.plist in Resources */,
 				D0593C671CE173A50028C92B /* Main.storyboard in Resources */,

@@ -39,47 +39,47 @@ typedef NS_ENUM(NSUInteger, PHLaZhuTuSubstyle) {
      */
     PHLaZhuTuSubstyleMACD,
     /**
-     *  KDJ样式
+     *  KDJ样式  K ,D (0 - 100) J可以大于100，也可以小于0。
      */
     PHLaZhuTuSubstyleKDJ,
     /**
-     *  RSI样式
+     *  RSI样式,值为（0 - 100）之间
      */
     PHLaZhuTuSubstyleRSI,
     /**
-     *  BIAS样式
+     *  BIAS样式,BIAS = (PRICE - DAY?AVERAGE)/AVERAGE * 100, DAY6,12,24.
      */
     PHLaZhuTuSubstyleBIAS,
     /**
-     *  DMA样式
+     *  DMA样式,DMA = AVERAGE10 - AVERAGE50 , AMA = AVERAGE10 .
      */
     PHLaZhuTuSubstyleDMA,
     /**
-     *  OBV样式
+     *  OBV样式,由OBV值和线两部分组成
      */
     PHLaZhuTuSubstyleOBV,
     /**
-     *  ROC样式
+     *  ROC样式,一般有两条线组成，ROC =（tcprice - 12db_price)/12db_price *100
      */
     PHLaZhuTuSubstyleROC,
     /**
-     *  MTM样式
+     *  MTM样式,MTM = (c + cn * 100) - 100
      */
     PHLaZhuTuSubstyleMTM,
     /**
-     *  CR样式
+     *  CR样式, CR = P1 / P2 * 100
      */
     PHLaZhuTuSubstyleCR,
     /**
-     *  DMI样式
+     *  DMI样式, 由PDI,MDI,ADX,ADXR四条线组成
      */
     PHLaZhuTuSubstyleDMI,
     /**
-     *  BRAR样式
+     *  BRAR样式,情绪指标,由BR线和AR线组成
      */
     PHLaZhuTuSubstyleBRAR,
     /**
-     *  VR样式
+     *  VR样式,成交变异率
      */
     PHLaZhuTuSubstyleVR,
     /**
@@ -213,6 +213,137 @@ typedef NS_ENUM(NSUInteger, PHLaZhuTuSubstyle) {
  *  @param kdjarray KDJ数组
  */
 -(void)initWithKDJ:(NSArray *) kdjarray;
+
+
+/**
+ *  初始化RSI数组
+ *
+ *  @param rsiarray RSI数组
+ */
+-(void)initWithRSI:(NSArray *)rsiarray;
+
+/**
+ *  初始化BIAS数组
+ *
+ *  @param biasarray BIAS数组
+ */
+-(void)initWithBIAS:(NSArray *)biasarray;
+
+/**
+ *  初始化DMA数组
+ *
+ *  @param dmaarray DMA数组
+ */
+-(void)initWithDMA:(NSArray *)dmaarray;
+
+/**
+ *  初始化OBV数组
+ *
+ *  @param obvarray OBV数组
+ */
+-(void)initWithOBV:(NSArray *)obvarray;
+
+/**
+ *  初始化ROC数组
+ *
+ *  @param rocarray ROC数组
+ */
+-(void)initWithROC:(NSArray *)rocarray;
+
+/**
+ *  初始化MTM数组
+ *
+ *  @param mtmarray MTM数组
+ */
+-(void)initWithMTM:(NSArray *)mtmarray;
+
+
+/**
+ *  初始化CR数组
+ *
+ *  @param crarray CR数组
+ */
+-(void)initWithCR:(NSArray *)crarray;
+
+
+/**
+ *  初始化DMI数组
+ *
+ *  @param dmiarray DMI数组
+ */
+-(void)initWithDMI:(NSArray *)dmiarray;
+
+
+/**
+ *  初始化BRAR数组
+ *
+ *  @param brararray brar数组
+ */
+-(void)initWithBRAR:(NSArray *)brararray;
+
+
+/**
+ *  初始化VR数组
+ *
+ *  @param vrarray VR数组
+ */
+-(void)initWithVR:(NSArray *)vrarray;
+
+/**
+ *  初始化TRIX数组
+ *
+ *  @param trixarray VR数组
+ */
+-(void)initWithTRIX:(NSArray *)trixarray;
+
+/**
+ *  初始化EMV数组
+ *
+ *  @param emvarray EMV数组
+ */
+-(void)initWithEMV:(NSArray *)emvarray;
+
+/**
+ *  初始化WR数组
+ *
+ *  @param wrarray WR数组
+ */
+-(void)initWithWR:(NSArray *)wrarray;
+
+
+
+
+
+
+
+
+/**
+ *  初始化PSY数组
+ *
+ *  @param psyarray PSY数组
+ */
+-(void)initWithPSY:(NSArray *)psyarray;
+
+
+
+/**
+ *  初始化DPO数组
+ *
+ *  @param dpoarray DPO数组
+ */
+-(void)initWithDPO:(NSArray *)dpoarray;
+
+
+
+/**
+ *  初始化ASI数组
+ *
+ *  @param asiarray ASI数组
+ */
+-(void)initWithASI:(NSArray *)asiarray;
+
+
+
 
 
 

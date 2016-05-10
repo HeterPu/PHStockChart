@@ -51,7 +51,24 @@
 @property (nonatomic,strong) NSArray * volArray;
 @property (nonatomic,strong) NSArray * macdArray;
 @property (nonatomic,strong) NSArray * kdjArray;
+@property (nonatomic,strong) NSArray * rsiArray;
+@property (nonatomic,strong) NSArray * biasArray;
+@property (nonatomic,strong) NSArray * dmaArray;
+@property (nonatomic,strong) NSArray * obvArray;
+@property (nonatomic,strong) NSArray * rocArray;
+@property (nonatomic,strong) NSArray * mtmArray;
+@property (nonatomic,strong) NSArray * crArray;
+@property (nonatomic,strong) NSArray * dmiArray;
+@property (nonatomic,strong) NSArray * brarArray;
+@property (nonatomic,strong) NSArray * vrArray;
+@property (nonatomic,strong) NSArray * trixArray;
+@property (nonatomic,strong) NSArray * emvArray;
+@property (nonatomic,strong) NSArray * wrArray;
 
+@property (nonatomic,strong) NSArray * psyArray;
+@property (nonatomic,strong) NSArray * dpoArray;
+
+@property (nonatomic,strong) NSArray * asiArray;
 
 #pragma mark -- 其它属性
 
@@ -413,15 +430,161 @@
 }
 
 
-
-
 -(void)initWithKDJ:(NSArray *)kdjarray {
     
-    CGFloat _MAX_NUM = 0;
-    CGFloat _MIN_NUM = 100;
+    _kdjArray = [self getLineArray:kdjarray];
+}
+
+
+-(void)initWithRSI:(NSArray *)rsiarray {
     
+    _rsiArray = [self rsiArray];
+}
+
+
+-(void)initWithBIAS:(NSArray *)biasarray {
+
+    _biasArray = [self getLineArray:biasarray];
+}
+
+
+-(void)initWithDMA:(NSArray *)dmaarray {
+    
+    _dmaArray = [self getLineArray:dmaarray];
+}
+
+
+-(void)initWithOBV:(NSArray *)obvarray {
+    
+    _obvArray = [self getLineArray:obvarray];
+}
+
+
+-(void)initWithROC:(NSArray *)rocarray {
+    
+    _rocArray = [self getLineArray:rocarray];
     
 }
+
+
+-(void)initWithMTM:(NSArray *)mtmarray {
+    
+    CGFloat _MAX_NUM = [mtmarray[0][0] floatValue];
+    CGFloat _MIN_NUM = [mtmarray[0][0] floatValue];
+    
+    for (NSArray *arra in mtmarray) {
+        CGFloat MTM1value = [arra[0] floatValue];
+        CGFloat MTM2value = [arra[1] floatValue];
+        
+        if (_MAX_NUM < MTM1value ) _MAX_NUM = MTM1value;
+        if (_MAX_NUM < MTM2value ) _MAX_NUM = MTM2value;
+        
+        if (_MIN_NUM > MTM1value ) _MIN_NUM = MTM1value;
+        if (_MIN_NUM > MTM2value ) _MIN_NUM = MTM2value;
+    }
+    
+    CGFloat delta = _MAX_NUM - _MIN_NUM;
+    
+    NSMutableArray *temptarra = [NSMutableArray array];
+    for (NSArray *arra in mtmarray) {
+        NSMutableArray *temptarray = [NSMutableArray array];
+        CGFloat mtm1newvalue = ([arra[0] floatValue] - _MIN_NUM) / delta;
+        CGFloat mtm2newvalue = ([arra[1] floatValue] - _MIN_NUM) / delta;
+        [temptarray addObject: [NSNumber numberWithFloat:mtm1newvalue]];
+        [temptarray addObject: [NSNumber numberWithFloat:mtm2newvalue]];
+        [temptarra addObject:temptarray];
+    }
+    _mtmArray = temptarra;
+}
+
+
+-(void)initWithCR:(NSArray *)crarray {
+    
+        _crArray = [self getLineArray:crarray];
+}
+
+
+-(void)initWithDMI:(NSArray *)dmiarray {
+    
+       _dmiArray = [self getLineArray:dmiarray];
+    
+}
+
+
+-(void)initWithBRAR:(NSArray *)brararray {
+    
+    CGFloat _MAX_NUM = [brararray[0][0] floatValue];
+    CGFloat _MIN_NUM = [brararray[0][0] floatValue];
+    
+    for (NSArray *arra in brararray) {
+        CGFloat brar1value = [arra[0] floatValue];
+        CGFloat brar2value = [arra[1] floatValue];
+        
+        if (_MAX_NUM < brar1value ) _MAX_NUM = brar1value;
+        if (_MAX_NUM < brar2value ) _MAX_NUM = brar2value;
+        
+        if (_MIN_NUM > brar1value ) _MIN_NUM = brar1value;
+        if (_MIN_NUM > brar2value ) _MIN_NUM = brar2value;
+    }
+    
+    CGFloat delta = _MAX_NUM - _MIN_NUM;
+    
+    NSMutableArray *temptarra = [NSMutableArray array];
+    for (NSArray *arra in brararray) {
+        NSMutableArray *temptarray = [NSMutableArray array];
+        CGFloat brar1newvalue = ([arra[0] floatValue] - _MIN_NUM) / delta;
+        CGFloat brar2newvalue = ([arra[1] floatValue] - _MIN_NUM) / delta;
+        [temptarray addObject: [NSNumber numberWithFloat:brar1newvalue]];
+        [temptarray addObject: [NSNumber numberWithFloat:brar2newvalue]];
+        [temptarra addObject:temptarray];
+    }
+    _brarArray = temptarra;
+}
+
+
+
+-(void)initWithVR:(NSArray *)vrarray {
+    
+    _vrArray = [self getLineArray:vrarray];
+}
+
+
+
+-(void)initWithTRIX:(NSArray *)trixarray {
+    
+    _trixArray = [self getLineArray:trixarray];
+}
+
+
+-(void)initWithEMV:(NSArray *)emvarray {
+    
+    _emvArray = [self getLineArray:emvarray];
+}
+
+
+-(void)initWithWR:(NSArray *)wrarray {
+    
+    _wrArray = [self getLineArray:wrarray];
+}
+
+
+-(void)initWithPSY:(NSArray *)psyarray {
+    
+    _psyArray = [self getLineArray:psyarray];
+}
+
+
+-(void)initWithDPO:(NSArray *)dpoarray {
+    
+    _dpoArray = [self getLineArray:dpoarray];
+}
+
+
+-(void)initWithASI:(NSArray *)asiarray {
+    
+    _asiArray = [self getLineArray:asiarray];
+}
+
 
 
 #pragma mark -- 分时图绘图
@@ -512,6 +675,7 @@
     [color(239, 243, 244, 1) set];
     CGContextStrokePath(ctxr21);
 }
+
 
 
 
@@ -739,10 +903,10 @@
     CGContextSetLineDash(ctx, 5.0f, 0, 0);
 //蜡烛图
     for (int i = 0; i < count; i++) {
-        CGFloat high = [ _laZhuTuTransArray[i][0] floatValue];
-        CGFloat low = [ _laZhuTuTransArray[i][1] floatValue];
-        CGFloat open = [ _laZhuTuTransArray[i][2] floatValue];
-        CGFloat close =[ _laZhuTuTransArray[i][3] floatValue];
+        CGFloat high  = [_laZhuTuTransArray[i][0] floatValue];
+        CGFloat low   = [_laZhuTuTransArray[i][1] floatValue];
+        CGFloat open  = [_laZhuTuTransArray[i][2] floatValue];
+        CGFloat close = [_laZhuTuTransArray[i][3] floatValue];
         if ( close > open) {
             [color(252, 64, 69, 1) set];
         }else
@@ -763,13 +927,13 @@
     CGContextSetLineWidth(ctx, lazhuUnitDot);
     CGContextSetLineJoin(ctx, kCGLineJoinRound);
     
-    CGFloat m5lineStart = [ _laZhuTuTransArray[0][4] floatValue];
-    CGFloat m10lineStart = [ _laZhuTuTransArray[0][5] floatValue];
-    CGFloat m20lineStart  = [ _laZhuTuTransArray[0][6] floatValue];
+    CGFloat m5lineStart = [_laZhuTuTransArray[0][4] floatValue];
+    CGFloat m10lineStart = [_laZhuTuTransArray[0][5] floatValue];
+    CGFloat m20lineStart  = [_laZhuTuTransArray[0][6] floatValue];
     
     CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, padding + ( 1 - m5lineStart) * 4 *squareH);
     for (int i = 1; i < count; i++) {
-        CGFloat m5line = [ _laZhuTuTransArray[i][4] floatValue];
+        CGFloat m5line = [_laZhuTuTransArray[i][4] floatValue];
         CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, padding + ( 1 - m5line) * 4 *squareH);
     }
     [color(67, 188, 252, 1)  set];
@@ -778,7 +942,7 @@
 //M10线
     CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, padding + ( 1 - m10lineStart) * 4 *squareH);
     for (int i = 1; i < count; i++) {
-        CGFloat m10line = [ _laZhuTuTransArray[i][5] floatValue];
+        CGFloat m10line = [_laZhuTuTransArray[i][5] floatValue];
         CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, padding + ( 1 - m10line) * 4 *squareH);
     }
     [color(236, 194, 81, 1)  set];
@@ -787,7 +951,7 @@
 //M20线
     CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, padding + ( 1 - m20lineStart) * 4 *squareH);
     for (int i = 1; i < count; i++) {
-        CGFloat m20line  = [ _laZhuTuTransArray[i][6] floatValue];
+        CGFloat m20line  = [_laZhuTuTransArray[i][6] floatValue];
         CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, padding + ( 1 - m20line) * 4 *squareH);
     }
     [color(224, 106, 237, 1)  set];
@@ -833,35 +997,35 @@
 -(void)setMACD{
     
     CGFloat lazhuUnitDot = (VIEW_SIZE.width - 2 * padding) / 324;
-    CGFloat startpointy = VIEW_SIZE.height - buttompadding - squareH / 2;
+    CGFloat startpointy = VIEW_SIZE.height - buttompadding - squareH;
     
     int count  = (int) _macdArray.count;
     CGContextRef  ctx =  UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(ctx, 1);
     CGContextSetLineJoin(ctx, kCGLineJoinRound);
 //EMA12线
-    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy);
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _macdArray[0][0] floatValue] * squareH);
     for (int i = 1; i < count; i++) {
-        CGFloat ema12value = [ _macdArray[i][0] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH / 2 * ema12value);
+        CGFloat ema12value = [_macdArray[i][0] floatValue];
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * ema12value);
 }
     [color(97, 177, 209, 1)  set];
     CGContextStrokePath(ctx);
 //EMA26线
-    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy);
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _macdArray[0][1] floatValue] * squareH);
 
     for (int i = 1; i < count; i++) {
-        CGFloat ema26value = [ _macdArray[i][1] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH / 2 * ema26value);
+        CGFloat ema26value = [_macdArray[i][1] floatValue];
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * ema26value);
 }
     [color(220, 200, 106, 1)  set];
-    CGContextStrokePath(ctx);
+     CGContextStrokePath(ctx);
 //阴阳线
-    for (int i = 1; i < count; i++) {
+    for (int i = 0; i < count; i++) {
         CGContextMoveToPoint(ctx, padding + (3 + 4 * i )* lazhuUnitDot, startpointy);
-        CGFloat difnumber = [ _macdArray[i][2] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i )* lazhuUnitDot, startpointy + squareH / 2 * difnumber);
-        if (difnumber > 0) {
+        CGFloat difnumber = [_macdArray[i][2] floatValue];
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i )* lazhuUnitDot, startpointy - squareH * difnumber);
+        if (difnumber < 0) {
             [color(81, 182, 64, 1) set ];
         }
         else
@@ -875,83 +1039,230 @@
 //绘制KDJ
 -(void)setKDJ {
     
+    CGFloat lazhuUnitDot = (VIEW_SIZE.width - 2 * padding) / 324;
+    CGFloat startpointy = VIEW_SIZE.height - buttompadding;
     
-    
-    
-    
-    
+    int count  = (int) _kdjArray.count;
+    CGContextRef  ctx =  UIGraphicsGetCurrentContext();
+    CGContextSetLineWidth(ctx, 1);
+    CGContextSetLineJoin(ctx, kCGLineJoinRound);
+//k
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _kdjArray[0][0] floatValue] * squareH * 2);
+    for (int i = 1; i < count; i++) {
+        CGFloat kvalue = [_kdjArray[i][0] floatValue];
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * kvalue * 2);
+    }
+    [color(213, 145, 225, 1)  set];
+    CGContextStrokePath(ctx);
+//d
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _kdjArray[0][1] floatValue] * squareH * 2);
+    for (int i = 1; i < count; i++) {
+        CGFloat dvalue = [_kdjArray[i][1] floatValue];
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * dvalue * 2);
+    }
+    [color(83, 170, 210, 1)  set];
+    CGContextStrokePath(ctx);
+//j
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _kdjArray[0][2] floatValue] * squareH * 2);
+    for (int i = 1; i < count; i++) {
+        CGFloat jvalue = [_kdjArray[i][2] floatValue];
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * jvalue * 2);
+    }
+    [color(218, 198, 214, 1)  set];
+    CGContextStrokePath(ctx);
+
 }
 
 
 //绘制RSI
 -(void)setRSI {
     
+    CGFloat lazhuUnitDot = (VIEW_SIZE.width - 2 * padding) / 324;
+    CGFloat startpointy = VIEW_SIZE.height - buttompadding;
     
-    
+    int count  = (int) _rsiArray.count;
+    CGContextRef  ctx =  UIGraphicsGetCurrentContext();
+    CGContextSetLineWidth(ctx, 1);
+    CGContextSetLineJoin(ctx, kCGLineJoinRound);
+//rsi1
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _rsiArray[0][0] floatValue] * squareH * 2);
+    for (int i = 1; i < count; i++) {
+        CGFloat rsi1value = [_rsiArray[i][0] floatValue];
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * rsi1value * 2);
+    }
+    [color(213, 145, 225, 1)  set];
+    CGContextStrokePath(ctx);
+//rsi2
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _rsiArray[0][1] floatValue] * squareH * 2);
+    for (int i = 1; i < count; i++) {
+        CGFloat rsi2value = [_rsiArray[i][1] floatValue];
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * rsi2value * 2);
+    }
+    [color(83, 170, 210, 1)  set];
+    CGContextStrokePath(ctx);
+//rsi3
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _rsiArray[0][2] floatValue] * squareH * 2);
+    for (int i = 1; i < count; i++) {
+        CGFloat rsi3value = [_rsiArray[i][2] floatValue];
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * rsi3value * 2);
+    }
+    [color(218, 198, 214, 1)  set];
+    CGContextStrokePath(ctx);
 }
 
 
 //绘制BIAS
 -(void)setBIAS{
     
+    CGFloat lazhuUnitDot = (VIEW_SIZE.width - 2 * padding) / 324;
+    CGFloat startpointy = VIEW_SIZE.height - buttompadding;
     
+    int count  = (int) _biasArray.count;
+    CGContextRef  ctx =  UIGraphicsGetCurrentContext();
+    CGContextSetLineWidth(ctx, 1);
+    CGContextSetLineJoin(ctx, kCGLineJoinRound);
+//bias1
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _biasArray[0][0] floatValue] * squareH * 2);
+    for (int i = 1; i < count; i++) {
+        CGFloat bias1value = [_biasArray[i][0] floatValue];
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * bias1value * 2);
+    }
+    [color(213, 145, 225, 1)  set];
+    CGContextStrokePath(ctx);
+//bias2
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _biasArray[0][1] floatValue] * squareH * 2);
+    for (int i = 1; i < count; i++) {
+        CGFloat bias2value = [_biasArray[i][1] floatValue];
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * bias2value * 2);
+    }
+    [color(83, 170, 210, 1)  set];
+    CGContextStrokePath(ctx);
+//bias3
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _biasArray[0][2] floatValue] * squareH * 2);
+    for (int i = 1; i < count; i++) {
+        CGFloat bias3value = [_biasArray[i][2] floatValue];
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * bias3value * 2);
+    }
+    [color(218, 198, 214, 1)  set];
+    CGContextStrokePath(ctx);
     
 }
 
 
 //绘制DMA
 -(void)setDMA{
-    
-    
-    
+
+    [self drawTwoLine:_dmaArray];
 }
 
 
 //绘制OBV
 -(void)setOBV{
     
-    
-    
+    [self drawTwoLine:_obvArray];
 }
 
 
 //绘制ROC
 -(void)setROC{
-    
-    
-    
+
+    [self drawTwoLine:_rocArray];
 }
 
 
 //绘制MTM
 -(void)setMTM{
     
-    
-    
+    [self drawTwoLine:_mtmArray];
 }
 
 
 //绘制CR
 -(void)setCR{
     
+    CGFloat lazhuUnitDot = (VIEW_SIZE.width - 2 * padding) / 324;
+    CGFloat startpointy = VIEW_SIZE.height - buttompadding;
     
-    
+    int count  = (int) _crArray.count;
+    CGContextRef  ctx =  UIGraphicsGetCurrentContext();
+    CGContextSetLineWidth(ctx, 1);
+    CGContextSetLineJoin(ctx, kCGLineJoinRound);
+//cr1
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _crArray[0][0] floatValue] * squareH * 2);
+    for (int i = 1; i < count; i++) {
+        CGFloat cr1value = [_crArray[i][0] floatValue];
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * cr1value * 2);
+    }
+    [color(213, 145, 225, 1)  set];
+    CGContextStrokePath(ctx);
+//cr2
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _crArray[0][1] floatValue] * squareH * 2);
+    for (int i = 1; i < count; i++) {
+        CGFloat cr2value = [_crArray[i][1] floatValue];
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * cr2value * 2);
+    }
+    [color(83, 170, 210, 1)  set];
+    CGContextStrokePath(ctx);
+//cr3
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _crArray[0][2] floatValue] * squareH * 2);
+    for (int i = 1; i < count; i++) {
+        CGFloat cr3value = [_crArray[i][2] floatValue];
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * cr3value * 2);
+    }
+    [color(218, 198, 214, 1)  set];
+    CGContextStrokePath(ctx);
 }
 
 
 //绘制DMI
 -(void)setDMI{
     
+    CGFloat lazhuUnitDot = (VIEW_SIZE.width - 2 * padding) / 324;
+    CGFloat startpointy = VIEW_SIZE.height - buttompadding;
     
-    
+    int count  = (int) _dmiArray.count;
+    CGContextRef  ctx =  UIGraphicsGetCurrentContext();
+    CGContextSetLineWidth(ctx, 1);
+    CGContextSetLineJoin(ctx, kCGLineJoinRound);
+//dmi1
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _dmiArray[0][0] floatValue] * squareH * 2);
+    for (int i = 1; i < count; i++) {
+        CGFloat dmi1value = [_dmiArray[i][0] floatValue];
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * dmi1value * 2);
+    }
+    [color(213, 145, 225, 1)  set];
+    CGContextStrokePath(ctx);
+//dmi2
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _dmiArray[0][1] floatValue] * squareH * 2);
+    for (int i = 1; i < count; i++) {
+        CGFloat dmi2value = [_dmiArray[i][1] floatValue];
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * dmi2value * 2);
+    }
+    [color(83, 170, 210, 1)  set];
+    CGContextStrokePath(ctx);
+//dmi3
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _dmiArray[0][2] floatValue] * squareH * 2);
+    for (int i = 1; i < count; i++) {
+        CGFloat dmi3value = [_dmiArray[i][2] floatValue];
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * dmi3value * 2);
+    }
+    [color(218, 198, 214, 1)  set];
+    CGContextStrokePath(ctx);
+//dmi4
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _dmiArray[0][3] floatValue] * squareH * 2);
+    for (int i = 1; i < count; i++) {
+        CGFloat dmi4value = [_dmiArray[i][3] floatValue];
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * dmi4value * 2);
+    }
+    [color(245, 73, 108, 1)  set];
+    CGContextStrokePath(ctx);
 }
 
 
 //绘制BRAR
 -(void)setBRAR{
-    
-    
-    
+  
+    [self drawTwoLine:_brarArray];
 }
 
 
@@ -959,8 +1270,7 @@
 //绘制VR
 -(void)setVR{
     
-    
-    
+    [self drawTwoLine:_vrArray];
 }
 
 
@@ -968,8 +1278,8 @@
 
 //绘制TRIX
 -(void)setTRIX{
-    
-    
+   
+    [self drawTwoLine:_trixArray];
     
 }
 
@@ -977,7 +1287,7 @@
 //绘制EMV
 -(void)setEMV{
     
-    
+    [self drawTwoLine:_emvArray];
     
 }
 
@@ -986,7 +1296,7 @@
 //绘制WR
 -(void)setWR{
     
-    
+    [self drawTwoLine:_wrArray];
     
 }
 
@@ -1002,7 +1312,7 @@
 //绘制PSY
 -(void)setPSY{
     
-    
+    [self drawTwoLine:_psyArray];
     
 }
 
@@ -1011,7 +1321,7 @@
 //绘制DPO
 -(void)setDPO{
     
-    
+    [self drawTwoLine:_dpoArray];
     
 }
 
@@ -1029,7 +1339,7 @@
 //绘制ASI
 -(void)setASI{
     
-    
+    [self drawTwoLine:_asiArray];
     
 }
 
@@ -1138,6 +1448,87 @@
     return  _isZoomMode;
     
 }
+
+
+
+// 可以生成2，3，4线的数组
+-(NSArray *)getLineArray:(NSArray *)array {
+    
+    CGFloat _MAX_NUM = [array[0][0] floatValue];
+    CGFloat _MIN_NUM = [array[0][0] floatValue];
+    
+    for (NSArray *arra in array) {
+        CGFloat line1value = [arra[0] floatValue];
+        CGFloat line2value = [arra[1] floatValue];
+        
+        if (_MAX_NUM < line1value ) _MAX_NUM = line1value;
+        if (_MAX_NUM < line2value ) _MAX_NUM = line2value;
+        
+        if (_MIN_NUM > line1value ) _MIN_NUM = line1value;
+        if (_MIN_NUM > line2value ) _MIN_NUM = line2value;
+        if (arra.count == 3) {
+            CGFloat line3value = [arra[2] floatValue];
+            if (_MAX_NUM < line3value ) _MAX_NUM = line3value;
+            if (_MIN_NUM > line3value ) _MIN_NUM = line3value;
+            if (arra.count == 4) {
+                CGFloat line4value = [arra[3] floatValue];
+                if (_MAX_NUM < line4value ) _MAX_NUM = line4value;
+                if (_MIN_NUM > line4value ) _MIN_NUM = line4value;
+            }
+        }
+    }
+    
+    CGFloat delta = _MAX_NUM - _MIN_NUM;
+    
+    NSMutableArray *temptarra = [NSMutableArray array];
+    for (NSArray *arra in array) {
+        NSMutableArray *temptarray = [NSMutableArray array];
+        CGFloat vr1newvalue = ([arra[0] floatValue] - _MIN_NUM) / delta;
+        CGFloat vr2newvalue = ([arra[1] floatValue] - _MIN_NUM) / delta;
+        [temptarray addObject: [NSNumber numberWithFloat:vr1newvalue]];
+        [temptarray addObject: [NSNumber numberWithFloat:vr2newvalue]];
+        if (arra.count == 3) {
+            CGFloat vr3newvalue = ([arra[2] floatValue] - _MIN_NUM) / delta;
+               [temptarray addObject: [NSNumber numberWithFloat:vr3newvalue]];
+            if (arra.count == 4) {
+               CGFloat vr4newvalue = ([arra[3] floatValue] - _MIN_NUM) / delta;
+               [temptarray addObject: [NSNumber numberWithFloat:vr4newvalue]];
+            }
+        }
+        [temptarra addObject:temptarray];
+    }
+    return temptarra;
+}
+
+
+//画两条线，单纯的两线
+-(void)drawTwoLine:(NSArray *)array {
+    
+    CGFloat lazhuUnitDot = (VIEW_SIZE.width - 2 * padding) / 324;
+    CGFloat startpointy = VIEW_SIZE.height - buttompadding;
+    
+    int count  = (int) array.count;
+    CGContextRef  ctx =  UIGraphicsGetCurrentContext();
+    CGContextSetLineWidth(ctx, 1);
+    CGContextSetLineJoin(ctx, kCGLineJoinRound);
+//line1
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ array[0][0] floatValue] * squareH * 2);
+    for (int i = 1; i < count; i++) {
+        CGFloat line1value = [array[i][0] floatValue];
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * line1value * 2);
+    }
+    [color(250, 202, 65, 1)  set];
+    CGContextStrokePath(ctx);
+//line2
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ array[0][1] floatValue] * squareH * 2);
+    for (int i = 1; i < count; i++) {
+        CGFloat line2value = [array[i][1] floatValue];
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * line2value * 2);
+    }
+    [color(83, 170, 210, 1)  set];
+    CGContextStrokePath(ctx);
+}
+
 
 
 @end
