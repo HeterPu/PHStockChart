@@ -28,15 +28,11 @@
 @property (nonatomic,strong) NSArray * xiaoZhexData ;
 @property (nonatomic,strong) NSArray * zhuData;
 
-
 @property (nonatomic,strong) NSArray * fenShiVol;
 @property (nonatomic,strong) NSArray * fenShiDaZhe;
 @property (nonatomic,strong) NSArray * fenShiXiaoZhe;
 
-
-
 @property (nonatomic,assign) CGFloat zuoShou;
-
 
 @property (nonatomic,weak) UILabel * zuigaoL;
 @property (nonatomic,weak) UILabel * zuidiL;
@@ -50,28 +46,18 @@
 @property (nonatomic,weak) UILabel * shijian5;
 
 
-
-
 #pragma mark -- 蜡烛图属性
 @property (nonatomic,strong) NSArray * laZhuTuTransArray;
 @property (nonatomic,strong) NSArray * volArray;
 @property (nonatomic,strong) NSArray * macdArray;
 
 
-
-
 #pragma mark -- 其它属性
-
-
-
 
 
 @end
 
 @implementation GuPiaoView
-
-
-
 
 -(void)initWithChartStyle:(PHChartstyle)style {
     
@@ -80,30 +66,22 @@
 }
 
 
-
 #pragma mark - 重绘方法
 
-
 - (void)drawRect:(CGRect)rect {
-
     
     if( _chartStyle == PHChartStyleFenShiTu){
-        
         [self setFangKuang];
         [self setBiaoQian];
         [self setVol1];
         [self setFenShiTu];
-    
     }
     else
     {
-        
         [self setfangkuang2];
         [self setLaZhuTu];
         
-
         switch(_laZhuTuSubStyle){
-        
             case PHLaZhuTuSubstyleVOL:
                  [self setVol2];
                    break;
@@ -172,23 +150,13 @@
                 break;
             default:
                 break;
-        
         }
-      
-        
     }
-    
-    
-    
-    
-    
-    
 }
 
 #pragma mark -- 分时图初始化方法
 
 -(void)initWithLabel {
-    
     //left
     UILabel *zuigaoL = [[UILabel alloc] init];
     zuigaoL.font = [UIFont systemFontOfSize:8.0];
@@ -201,7 +169,6 @@
     UILabel *jyzl = [[UILabel alloc] init];
     jyzl.font = [UIFont systemFontOfSize:8.0];
     jyzl.textColor = color(166, 166, 166, 1);
-    
     //right
     UILabel *zuigaoB = [[UILabel alloc] init];
     zuigaoB.textAlignment = NSTextAlignmentRight;
@@ -212,7 +179,6 @@
     zuidiB.textAlignment = NSTextAlignmentRight;
     zuidiB.font = [UIFont systemFontOfSize:8.0];
     zuidiB.textColor = color(166, 166, 166, 1);
-    
     //shijian
     UILabel *shijian1 = [[UILabel alloc] init];
     shijian1.text = @"09.30";
@@ -244,18 +210,12 @@
     shijian5.font = [UIFont systemFontOfSize:7.0];
     shijian5.textColor = color(166, 166, 166, 1);
    
-    
-    
     if (self.isShiZiXianShown == YES) {
-        
         ShiZilayer *shizi = [[ShiZilayer alloc] init];
         _shiZiLayer = shizi;
         _shiZiLayer.hidden = YES;
         [self.layer addSublayer:shizi];
-       
     }
-    
-    
     _zuigaoL = zuigaoL;
     _zuidiL = zuidiL;
     _zuigaoB = zuigaoB;
@@ -267,9 +227,6 @@
     _shijian4 = shijian4;
     _shijian5 = shijian5;
     
-
-
-    
     [self addSubview: zuigaoL];
     [self addSubview: zuidiL];
     [self addSubview: zuigaoB];
@@ -280,10 +237,6 @@
     [self addSubview:shijian3];
     [self addSubview:shijian4];
     [self addSubview:shijian5];
-    
-
-
-   
 }
 
 
@@ -292,22 +245,15 @@
 
 -(void)initWithZuoShou:(CGFloat)zuoshou zongL:(NSString *)zongl {
     
-    
     _zuoShou = zuoshou;
     _jyzl.text= zongl;
     
-    
-    
     if (self.isShiZiXianShown == YES) {
-        
-        ShiZilayer *shizi = [[ShiZilayer alloc] init];
-        _shiZiLayer = shizi;
-        _shiZiLayer.hidden = YES;
+         ShiZilayer *shizi = [[ShiZilayer alloc] init];
+         _shiZiLayer = shizi;
+         _shiZiLayer.hidden = YES;
         [self.layer addSublayer:shizi];
-        
     }
-    
-    
 }
 
 
@@ -318,123 +264,72 @@
     _xiaoZhexData = xiaozhe;
     _zhuData = zhu;
     
-    
     [self transferFenShiData];
-   
 }
 
 
 -(void)transferFenShiData {
-//处理大折线和小折线数据
-
     
-// find biggest offsetvalue
+    // find biggest offsetvalue
     CGFloat  maxOffSetValue = 0 ;
-    for (NSNumber *num  in _daZhexData)
-    {
     
+    for (NSNumber *num  in _daZhexData) {
         CGFloat absolutevalue = [self getAbsoluteFloatValue:([num floatValue] - _zuoShou)];
         if (maxOffSetValue < absolutevalue) maxOffSetValue = absolutevalue;
-        
     }
-    
-    for (NSString *num  in _xiaoZhexData)
-    {
-        
+    for (NSString *num  in _xiaoZhexData) {
         CGFloat absolutevalue = [self getAbsoluteFloatValue:([num floatValue] - _zuoShou)];
         if (maxOffSetValue < absolutevalue) maxOffSetValue = absolutevalue;
-        
     }
-    
-    
     CGFloat high = _zuoShou + maxOffSetValue;
     CGFloat low  = _zuoShou - maxOffSetValue;
     
-    
-// set fenshidazhexian array
-    
+   // set fenshidazhexian array
     NSMutableArray *dazhe = [NSMutableArray array];
     for (NSNumber * num in  _daZhexData) {
-        
-          CGFloat temptfloat = ([num floatValue] - low)/(2 * maxOffSetValue);
-        
+        CGFloat temptfloat = ([num floatValue] - low)/(2 * maxOffSetValue);
         [dazhe addObject:[NSNumber numberWithFloat:temptfloat]];
-        
     }
-    
     _fenShiDaZhe = dazhe;
     
-    
-// set fenshixiaozhexian array
+    // set fenshixiaozhexian array
     NSMutableArray *xiaozhe = [NSMutableArray array];
     for (NSNumber * num in  _xiaoZhexData) {
-        
         CGFloat temptfloat = ([num floatValue] - low)/(2 * maxOffSetValue);
-        
         [xiaozhe addObject:[NSNumber numberWithFloat:temptfloat]];
-        
     }
-    
     _fenShiXiaoZhe = xiaozhe;
-  
     
-//转换分时图成交量数据
+    //转换分时图成交量数据
     NSMutableArray *temptarra = [NSMutableArray array];
     CGFloat _max_NUM =[ _zhuData[0][1] floatValue] ;
-    for (NSArray * arra in  _zhuData)
-    {
-        for (NSNumber * num in arra) {
-            
-            if (_max_NUM < [num floatValue]) _max_NUM = [num floatValue];
-            
-            
-        }
-        
-    }
     
+    for (NSArray * arra in  _zhuData) {
+        for (NSNumber * num in arra) {
+            if (_max_NUM < [num floatValue]) _max_NUM = [num floatValue];
+        }
+    }
     
     for (NSArray * arra in  _zhuData) {
         NSMutableArray *tempt = [NSMutableArray array];
-        
         NSNumber *temptNumber1 = arra[0];
-        NSNumber *temptNumber2 = [NSNumber numberWithFloat: (([ arra[1] floatValue])/ _max_NUM )];
+        NSNumber *temptNumber2 = [NSNumber numberWithFloat:(([ arra[1] floatValue])/ _max_NUM )];
         
         [tempt addObject:temptNumber1];
         [tempt addObject:temptNumber2];
         [temptarra addObject:tempt];
-        
     }
-    
     _fenShiVol = temptarra;
     
-    
-    
-    
-//setlabel
-    
+    //setlabel
     _zuigaoL.text = [NSString stringWithFormat:@"%.1f",high];
     _zuigaoB.text = [NSString stringWithFormat:@"%.2f%%",maxOffSetValue * 100 / _zuoShou];
     _zuidiL.text = [NSString stringWithFormat:@"%.1f",low];
     _zuidiB.text = [NSString stringWithFormat:@"-%.2f%%",maxOffSetValue  * 100 / _zuoShou];
-    
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 #pragma mark - 蜡烛图初始化方法
-
 
 //初始化蜡烛图
 -(void)initWithLZTarray:(NSArray *)lztarray    {
@@ -445,34 +340,22 @@
     CGFloat  _min_NUM = [lztarray[0][0] floatValue];
     
     for (NSArray * arra in  lztarray) {
-        
         for (int i = 0; i < 7; i++) {
-            
             NSNumber *num = arra[i];
             if (_max_NUM < [num floatValue]) _max_NUM = [num floatValue];
             if (_min_NUM > [num floatValue]) _min_NUM = [num floatValue];
-            
-        }
-        
-    }
-    
-    
+  }
+}
     _max_NUM -= _min_NUM;
     for (NSArray * arra in  lztarray) {
         NSMutableArray *tempt = [NSMutableArray array];
         for (NSNumber *num in arra) {
-            
-            NSNumber *temptNumber = [NSNumber numberWithFloat: (([ num floatValue] - _min_NUM )/ _max_NUM )];
+            NSNumber *temptNumber = [NSNumber numberWithFloat:(([ num floatValue] - _min_NUM )/ _max_NUM )];
             [tempt addObject:temptNumber];
-            
-        }
-        
-        [temptarra addObject:tempt];
-        
-    }
-    
+  }
+            [temptarra addObject:tempt];
+}
     _laZhuTuTransArray = temptarra;
-    
 }
 
 
@@ -481,81 +364,51 @@
     
     NSMutableArray *temptarra = [NSMutableArray array];
     CGFloat _max_NUM =[ volarray[0][1] floatValue] ;
-    for (NSArray * arra in  volarray)
-    {
+    for (NSArray * arra in  volarray) {
         for (NSNumber * num in arra) {
-            
             if (_max_NUM < [num floatValue]) _max_NUM = [num floatValue];
-            
-            
-        }
-        
-    }
-    
-    
+  }
+}
     for (NSArray * arra in  volarray) {
         NSMutableArray *tempt = [NSMutableArray array];
-        
         NSNumber *temptNumber1 = arra[0];
         NSNumber *temptNumber2 = [NSNumber numberWithFloat: (([ arra[1] floatValue])/ _max_NUM )];
-        
+
         [tempt addObject:temptNumber1];
         [tempt addObject:temptNumber2];
         [temptarra addObject:tempt];
-        
-    }
-    
+  }
     _volArray = temptarra;
-    
-    
-    
 }
 
 
 //初始化macd
 -(void)initWithMACD:(NSArray *)macdarray {
     
-
-    
     CGFloat _max_NUM = 0;
-    
     for (NSArray *arra in macdarray) {
-        
         CGFloat ema12 = [arra[0] floatValue];
         CGFloat ema26 = [arra[1] floatValue];
-        
         CGFloat dif = ema12 - ema26;
         
-        
-
-            if (_max_NUM < [self getAbsoluteFloatValue:ema12] ) _max_NUM = [self getAbsoluteFloatValue:ema12];
-            if (_max_NUM < [self getAbsoluteFloatValue:ema26] ) _max_NUM = [self getAbsoluteFloatValue:ema26];
-            if (_max_NUM < [self getAbsoluteFloatValue:dif] ) _max_NUM = [self getAbsoluteFloatValue:dif];
-    
-    }
-    
-    
+        if (_max_NUM < [self getAbsoluteFloatValue:ema12] ) _max_NUM = [self getAbsoluteFloatValue:ema12];
+        if (_max_NUM < [self getAbsoluteFloatValue:ema26] ) _max_NUM = [self getAbsoluteFloatValue:ema26];
+        if (_max_NUM < [self getAbsoluteFloatValue:dif] ) _max_NUM = [self getAbsoluteFloatValue:dif];
+}
     NSMutableArray *temptarra = [NSMutableArray array];
-    
     for (NSArray * arra in macdarray) {
-        
         NSMutableArray *temptarray = [NSMutableArray array];
         CGFloat ema12 = [arra[0] floatValue] / (_max_NUM * 1.1);
         CGFloat ema26 = [arra[1] floatValue] / (_max_NUM * 1.1);
+        CGFloat delta = (ema12 - ema26) * 2 ;
         
-
+        [temptarray addObject:[NSNumber numberWithFloat:ema12]];
+        [temptarray addObject:[NSNumber numberWithFloat:ema26]];
+        [temptarray addObject:[NSNumber numberWithFloat:delta]];
         
-            CGFloat delta = (ema12 - ema26) * 2 ;
-            
-            
-            [temptarray addObject:[NSNumber numberWithFloat:ema12]];
-            [temptarray addObject:[NSNumber numberWithFloat:ema26]];
-            [temptarray addObject:[NSNumber numberWithFloat:delta]];
-        
-            [temptarra addObject:temptarray];
-    }
+        [temptarra addObject:temptarray];
+  }
     _macdArray = temptarra;
-    
 }
 
 
@@ -566,14 +419,8 @@
 
 #pragma mark -- 分时图绘图
 
-
-
 // 设置框线
-
 - (void)setFangKuang {
-    
-    
-    
     
     CGContextRef  ctxSK =  UIGraphicsGetCurrentContext();
     CGContextMoveToPoint(ctxSK, padding, padding);
@@ -623,15 +470,12 @@
     [color(239, 243, 244, 1) set];
     CGContextStrokePath(ctxr11);
     
-    
-    
     CGContextRef  ctxr13 =  UIGraphicsGetCurrentContext();
     CGContextMoveToPoint(ctxr13, padding, padding + squareH * 3 );
     CGContextAddLineToPoint(ctxr13,VIEW_SIZE.width - padding, padding + squareH * 3 );
     CGContextSetLineWidth(ctxr13, 1);
     [color(239, 243, 244, 1) set];
     CGContextStrokePath(ctxr13);
-    
     //2colum
     CGContextRef  ctxc21 =  UIGraphicsGetCurrentContext();
     CGContextMoveToPoint(ctxc21, padding + squareW, 2 * padding + 4 * squareH);
@@ -653,7 +497,6 @@
     CGContextSetLineWidth(ctxc23, 1);
     [color(239, 243, 244, 1) set];
     CGContextStrokePath(ctxc23);
-    
     //2row
     CGContextRef  ctxr21 =  UIGraphicsGetCurrentContext();
     CGContextMoveToPoint(ctxr21, padding, 2 * padding + squareH * 5 );
@@ -661,7 +504,6 @@
     CGContextSetLineWidth(ctxr21, 1);
     [color(239, 243, 244, 1) set];
     CGContextStrokePath(ctxr21);
-    
 }
 
 
@@ -670,68 +512,48 @@
 // 标签和时间
 
 - (void) setBiaoQian {
-    
-    //left
+//left
     _zuigaoL.frame = CGRectMake( padding + 1, padding + 1, 50, 15);
     _zuidiL.frame =  CGRectMake(padding + 1, padding + 4 * squareH - 15, 50, 15);
     _jyzl.frame =  CGRectMake(padding + 1, 2 * padding + 4 * squareH , 50, 15);
-    
-    //right
+//right
     _zuigaoB.frame =  CGRectMake( VIEW_SIZE.width -padding - 51, padding + 1, 50, 15);
     _zuidiB.frame = CGRectMake(VIEW_SIZE.width -padding - 51, padding + 4 * squareH - 15, 50, 15);
-    
-    
-    
-    //shijian
+//shijian
     _shijian1.frame = CGRectMake( padding , VIEW_SIZE.height - 20, 50, 15);
     _shijian2.frame = CGRectMake( padding + squareW - 25 , VIEW_SIZE.height - 20, 50, 15);
     _shijian3.frame = CGRectMake( padding + 2 * squareW - 25 , VIEW_SIZE.height - 20, 50, 15);
     _shijian4.frame = CGRectMake( padding + 3 * squareW - 25 , VIEW_SIZE.height - 20, 50, 15);
     _shijian5.frame = CGRectMake( VIEW_SIZE.width - 56 , VIEW_SIZE.height - 20, 50, 15);
-    
-    
-    
+
     if (self.isShiZiXianShown == YES) {
-    
         _shiZiLayer.frame = CGRectMake(0, 0, VIEW_SIZE.width, VIEW_SIZE.height);
        [_shiZiLayer setNeedsDisplay];
-        
-    }
-    
-    
+  }
 }
-
 
 -(void) setFenShiTu {
     
-    
-    
 //zhexiantianchong
-    
     CGContextRef  dazhexianY=  UIGraphicsGetCurrentContext();
     CGContextMoveToPoint(dazhexianY, padding, padding + 4 * squareH);
 
     int count1 = (int) _fenShiDaZhe.count;
     for (int i = 0; i < count1; i++) {
-   
         NSNumber  *percentage = _fenShiDaZhe[i];
         CGFloat x = padding + i * squareW / 60 ;
         CGFloat y = padding + 4 * squareH * (1 - [percentage floatValue]);
         CGContextAddLineToPoint(dazhexianY, x, y);
-    }
-
-   
+   }
     float  lastPointX = padding + count1 * squareW / 60 ;
     CGContextAddLineToPoint(dazhexianY, lastPointX, padding + 4 * squareH);
     [color(229, 241, 250, 1) set ];
     CGContextSetLineJoin(dazhexianY, kCGLineJoinRound);
     CGContextClosePath(dazhexianY);
     CGContextFillPath(dazhexianY);
-    
 //dazhexian
-    
     CGContextRef  dazhexian=  UIGraphicsGetCurrentContext();
-    
+
         for (int i = 0; i < count1; i++) {
             NSNumber *percentage = _fenShiDaZhe[i];
             CGFloat x = padding + i * squareW / 60 ;
@@ -744,23 +566,18 @@
             {
             CGContextAddLineToPoint(dazhexian, x, y);
             }
-        }
-    
+}
     [color(152, 168, 191, 1) set ];
     CGContextSetLineJoin(dazhexian, kCGLineJoinRound);
     CGContextStrokePath(dazhexian);
-    
 //xiaozhexian
-    
     CGContextRef  xiaozhexian=  UIGraphicsGetCurrentContext();
     
             int count2 = (int)_fenShiXiaoZhe.count;
             for (int i = 0; i < count2; i++) {
-    
                 NSString  *percentage = _fenShiXiaoZhe[i];
                 CGFloat x = padding + i * squareW / 60 ;
                 CGFloat y = padding + 4 * squareH * (1 - percentage.floatValue);
-    
                 if (i == 0) {
                     CGContextMoveToPoint(xiaozhexian, x , y );
                 }
@@ -772,10 +589,7 @@
     [color(252, 197, 152, 1) set ];
     CGContextSetLineJoin(xiaozhexian, kCGLineJoinRound);
     CGContextStrokePath(xiaozhexian);
-    
- 
 //虚线
-    
     CGFloat lengths[] = {4,4};
     CGContextRef  ctxr12 =  UIGraphicsGetCurrentContext();
     CGContextMoveToPoint(ctxr12, padding, padding + squareH * 2 );
@@ -784,31 +598,22 @@
     CGContextSetLineWidth(ctxr12, 1);
     [color(143, 243, 249, 1) set];
     CGContextStrokePath(ctxr12);
-    
-    
 }
 
-
-
 // 柱状图
-
-
 -(void) setVol1 {
     
-   
-
     int count  = (int) _fenShiVol.count;
     for (int i = 0; i < count ; i++) {
         NSNumber *redorblue = _fenShiVol[i][0];
         NSNumber *percentage = _fenShiVol[i][1];
         [self zhutu1Index:i redOrBlue:[redorblue boolValue] percenttage:[NSNumber numberWithFloat:[percentage floatValue]]];
-    }
+  }
 }
 
 
 -(void)zhutu1Index:(NSInteger)index redOrBlue:(BOOL)redOrBlue percenttage:(NSNumber *)percentage {
 
-    
     CGFloat startPointX = padding  + squareW / 60 * index;
     CGFloat startPointY = VIEW_SIZE.height - buttompadding;
     CGFloat endPointX = padding  + squareW / 60 * index;
@@ -817,12 +622,9 @@
     CGContextRef  ctx=  UIGraphicsGetCurrentContext();
     CGContextMoveToPoint(ctx, startPointX, startPointY);
     CGContextAddLineToPoint(ctx, endPointX, endPointY);
-   
     UIColor *color = redOrBlue ? color(236, 86, 85, 1) : color(30, 170, 94, 1);
-    
     [color set ];
     CGContextStrokePath(ctx);
-    
 }
 
 
@@ -851,9 +653,7 @@
     [color(239, 243, 244, 1) set];
     CGContextStrokePath(ctxxK);
     
-    
     CGFloat lengths[] = {2,2};
-    
     CGContextRef  ctxr11 =  UIGraphicsGetCurrentContext();
     CGContextMoveToPoint(ctxr11, padding, padding + squareH * 1 );
     CGContextAddLineToPoint(ctxr11,VIEW_SIZE.width - padding, padding + squareH * 1 );
@@ -877,8 +677,7 @@
     CGContextStrokePath(ctxr13);
     
     if(_isZoomMode == NO) {
-        
-        //ROW HIDE
+//ROW HIDE
         CGContextRef  ctxrH1 =  UIGraphicsGetCurrentContext();
         CGContextMoveToPoint(ctxrH1, padding, padding + squareH / 2 * 1 );
         CGContextAddLineToPoint(ctxrH1,VIEW_SIZE.width - padding, padding + squareH / 2 * 1 );
@@ -906,19 +705,16 @@
         CGContextSetLineWidth(ctxrH4, 1);
         [color(239, 243, 244, 1) set];
         CGContextStrokePath(ctxrH4);
-        
-        //2row
+//2row
         CGContextRef  ctxrH5 =  UIGraphicsGetCurrentContext();
         CGContextMoveToPoint(ctxrH5, padding, 2 * padding + squareH * 5 );
         CGContextAddLineToPoint(ctxrH5,VIEW_SIZE.width - padding, 2 * padding + squareH * 5 );
         CGContextSetLineWidth(ctxrH5, 1);
         [color(239, 243, 244, 1) set];
         CGContextStrokePath(ctxrH5);
-        
     }
     
     if (self.isShiZiXianShown == YES) {
-        
         _shiZiLayer.frame = CGRectMake(0, 0, VIEW_SIZE.width, VIEW_SIZE.height);
         [_shiZiLayer setNeedsDisplay];
     }
@@ -934,21 +730,18 @@
     
     CGContextRef  ctx =  UIGraphicsGetCurrentContext();
     CGContextSetLineDash(ctx, 5.0f, 0, 0);
-    //蜡烛图
+//蜡烛图
     for (int i = 0; i < count; i++) {
-        
         CGFloat high = [ _laZhuTuTransArray[i][0] floatValue];
         CGFloat low = [ _laZhuTuTransArray[i][1] floatValue];
         CGFloat open = [ _laZhuTuTransArray[i][2] floatValue];
         CGFloat close =[ _laZhuTuTransArray[i][3] floatValue];
-        
         if ( close > open) {
             [color(252, 64, 69, 1) set];
         }else
         {
             [color(56, 171, 36, 1) set];
         }
-        
         CGContextMoveToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot , padding + ( 1 - high) * 4 *squareH );
         CGContextAddLineToPoint(ctx,padding + (3 + 4 * i) * lazhuUnitDot, padding + ( 1 - low) * 4 *squareH  );
         CGContextSetLineWidth(ctx, lazhuUnitDot);
@@ -959,7 +752,7 @@
         CGContextSetLineWidth(ctx, lazhuCXwidth);
         CGContextStrokePath(ctx);
     }
-    //M5线
+//M5线
     CGContextSetLineWidth(ctx, lazhuUnitDot);
     CGContextSetLineJoin(ctx, kCGLineJoinRound);
     
@@ -975,7 +768,7 @@
     [color(67, 188, 252, 1)  set];
     CGContextSetLineWidth(ctx, 0.5);
     CGContextStrokePath(ctx);
-    //M10线
+//M10线
     CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, padding + ( 1 - m10lineStart) * 4 *squareH);
     for (int i = 1; i < count; i++) {
         CGFloat m10line = [ _laZhuTuTransArray[i][5] floatValue];
@@ -984,7 +777,7 @@
     [color(236, 194, 81, 1)  set];
     CGContextSetLineWidth(ctx, 0.5);
     CGContextStrokePath(ctx);
-    //M20线
+//M20线
     CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, padding + ( 1 - m20lineStart) * 4 *squareH);
     for (int i = 1; i < count; i++) {
         CGFloat m20line  = [ _laZhuTuTransArray[i][6] floatValue];
@@ -994,6 +787,7 @@
     CGContextSetLineWidth(ctx, 0.5);
     CGContextStrokePath(ctx);
 }
+
 
 //绘制成交量
 -(void)setVol2 {
@@ -1005,6 +799,7 @@
         [self zhutu2Index:i redOrBlue:[redorblue boolValue] percenttage:percentage];
     }
 }
+
 
 -(void)zhutu2Index:(NSInteger)index redOrBlue:(BOOL)redOrBlue percenttage:(NSNumber *)percentage {
     
@@ -1021,7 +816,6 @@
     CGContextAddLineToPoint(ctx, endPointX, endPointY);
     
     UIColor *color = redOrBlue ? color(236, 86, 85, 1) : color(30, 170, 94, 1);
-    
     [color set ];
     CGContextSetLineWidth(ctx, lazhuCXwidth);
     CGContextStrokePath(ctx);
@@ -1038,24 +832,24 @@
     CGContextRef  ctx =  UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(ctx, 1);
     CGContextSetLineJoin(ctx, kCGLineJoinRound);
-  //EMA12线
+//EMA12线
     CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy);
     for (int i = 1; i < count; i++) {
         CGFloat ema12value = [ _macdArray[i][0] floatValue];
         CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy + squareH / 2 * ema12value);
-    }
+}
     [color(58, 184, 255, 1)  set];
     CGContextStrokePath(ctx);
-    //EMA26线
+//EMA26线
     CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy);
 
     for (int i = 1; i < count; i++) {
         CGFloat ema26value = [ _macdArray[i][1] floatValue];
         CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy + squareH / 2 * ema26value);
-    }
+}
     [color(113, 4, 255, 1)  set];
     CGContextStrokePath(ctx);
-    //阴阳线
+//阴阳线
     for (int i = 1; i < count; i++) {
         CGContextMoveToPoint(ctx, padding + (3 + 4 * i )* lazhuUnitDot, startpointy);
         CGFloat difnumber = [ _macdArray[i][2] floatValue];
