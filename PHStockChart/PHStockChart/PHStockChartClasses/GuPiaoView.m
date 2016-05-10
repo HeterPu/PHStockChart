@@ -1326,7 +1326,6 @@
 }
 
 
-
 //绘制BOLL
 -(void)setBOLL{
     
