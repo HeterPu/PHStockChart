@@ -11,6 +11,6 @@
 @interface ViewController : UIViewController
 
 
-UITableViewCell
+
 @end
 
