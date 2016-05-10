@@ -51,7 +51,7 @@ This library requires `iOS 4.0+` and `Xcode 6.0+`.
 
 License
 ==============
-YYKit is provided under the MIT license. See LICENSE file for details.
+PHStockChart is provided under the MIT license. See LICENSE file for details.
 
 
 
