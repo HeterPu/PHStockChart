@@ -207,5 +207,13 @@ typedef NS_ENUM(NSUInteger, PHLaZhuTuSubstyle) {
 -(void)initWithMACD:(NSArray *) macdarray;
 
 
+/**
+ *  初始化KDJ数组
+ *
+ *  @param kdjarray KDJ数组
+ */
+-(void)initWithKDJ:(NSArray *) kdjarray;
+
+
 
 @end

@@ -50,6 +50,7 @@
 @property (nonatomic,strong) NSArray * laZhuTuTransArray;
 @property (nonatomic,strong) NSArray * volArray;
 @property (nonatomic,strong) NSArray * macdArray;
+@property (nonatomic,strong) NSArray * kdjArray;
 
 
 #pragma mark -- 其它属性
@@ -414,7 +415,13 @@
 
 
 
-
+-(void)initWithKDJ:(NSArray *)kdjarray {
+    
+    CGFloat _MAX_NUM = 0;
+    CGFloat _MIN_NUM = 100;
+    
+    
+}
 
 
 #pragma mark -- 分时图绘图
@@ -836,25 +843,25 @@
     CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy);
     for (int i = 1; i < count; i++) {
         CGFloat ema12value = [ _macdArray[i][0] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy + squareH / 2 * ema12value);
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH / 2 * ema12value);
 }
-    [color(58, 184, 255, 1)  set];
+    [color(97, 177, 209, 1)  set];
     CGContextStrokePath(ctx);
 //EMA26线
     CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy);
 
     for (int i = 1; i < count; i++) {
         CGFloat ema26value = [ _macdArray[i][1] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy + squareH / 2 * ema26value);
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH / 2 * ema26value);
 }
-    [color(113, 4, 255, 1)  set];
+    [color(220, 200, 106, 1)  set];
     CGContextStrokePath(ctx);
 //阴阳线
     for (int i = 1; i < count; i++) {
         CGContextMoveToPoint(ctx, padding + (3 + 4 * i )* lazhuUnitDot, startpointy);
         CGFloat difnumber = [ _macdArray[i][2] floatValue];
         CGContextAddLineToPoint(ctx, padding + (3 + 4 * i )* lazhuUnitDot, startpointy + squareH / 2 * difnumber);
-        if (difnumber < 0) {
+        if (difnumber > 0) {
             [color(81, 182, 64, 1) set ];
         }
         else
@@ -867,6 +874,10 @@
 
 //绘制KDJ
 -(void)setKDJ {
+    
+    
+    
+    
     
     
 }
