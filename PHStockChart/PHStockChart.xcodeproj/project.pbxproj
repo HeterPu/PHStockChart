@@ -19,6 +19,7 @@
 		D0593C8D1CE174F10028C92B /* vol.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0593C8A1CE174F10028C92B /* vol.plist */; };
 		D0593C8E1CE174F10028C92B /* zhutu.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0593C8B1CE174F10028C92B /* zhutu.plist */; };
 		D0593C901CE175940028C92B /* dazhexian.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0593C8F1CE175940028C92B /* dazhexian.plist */; };
+		D0593C921CE17EB60028C92B /* macd.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0593C911CE17EB60028C92B /* macd.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		D0593C8A1CE174F10028C92B /* vol.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = vol.plist; sourceTree = "<group>"; };
 		D0593C8B1CE174F10028C92B /* zhutu.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = zhutu.plist; sourceTree = "<group>"; };
 		D0593C8F1CE175940028C92B /* dazhexian.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = dazhexian.plist; sourceTree = "<group>"; };
+		D0593C911CE17EB60028C92B /* macd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = macd.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 				D0593C8A1CE174F10028C92B /* vol.plist */,
 				D0593C8B1CE174F10028C92B /* zhutu.plist */,
 				D0593C8F1CE175940028C92B /* dazhexian.plist */,
+				D0593C911CE17EB60028C92B /* macd.plist */,
 			);
 			path = resourses;
 			sourceTree = "<group>";
@@ -175,6 +178,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0593C6C1CE173A50028C92B /* LaunchScreen.storyboard in Resources */,
+				D0593C921CE17EB60028C92B /* macd.plist in Resources */,
 				D0593C8E1CE174F10028C92B /* zhutu.plist in Resources */,
 				D0593C691CE173A50028C92B /* Assets.xcassets in Resources */,
 				D0593C8C1CE174F10028C92B /* lazhutu1.plist in Resources */,
@@ -346,6 +350,7 @@
 				D0593C721CE173A50028C92B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

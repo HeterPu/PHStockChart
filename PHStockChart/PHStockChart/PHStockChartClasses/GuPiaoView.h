@@ -183,9 +183,29 @@ typedef NS_ENUM(NSUInteger, PHLaZhuTuSubstyle) {
 
 
 #pragma mark - 蜡烛图初始化方法
-
+/**
+ *  初始化蜡烛图的数组
+ *
+ *  @param lztarray 蜡烛图数组
+ */
 -(void)initWithLZTarray:(NSArray *)lztarray;
 
+
+/**
+ *  初始化成交量的数组
+ *
+ *  @param volarray 成交量数组
+ */
 -(void)initWithVol:(NSArray *) volarray;
+
+
+/**
+ *  初始化MACD数组
+ *
+ *  @param volarray MACD数组
+ */
+-(void)initWithMACD:(NSArray *) macdarray;
+
+
 
 @end

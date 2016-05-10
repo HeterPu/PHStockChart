@@ -40,7 +40,7 @@
     
     
     [_gupiaoV initWithChartStyle:PHChartStyleLaZhuTu];
-    _gupiaoV.laZhuTuSubStyle = PHLaZhuTuSubstyleVOL;
+    _gupiaoV.laZhuTuSubStyle = PHLaZhuTuSubstyleMACD;
     
     _gupiaoV.backgroundColor = [UIColor whiteColor];
     _isFullScreen = NO;
@@ -165,7 +165,12 @@
     [_gupiaoV initWithVol:arr2];
     
     
-    NSLog(@"VVVVVV%@",arr1);
+    
+    NSString *path3 = [[NSBundle mainBundle] pathForResource:@"macd" ofType:@"plist"];
+    NSArray *arr3 = [[NSArray alloc] initWithContentsOfFile:path3];
+    
+    [_gupiaoV initWithMACD:arr3];
+     NSLog(@"VVVVVV%@",arr1);
     
 }
 
