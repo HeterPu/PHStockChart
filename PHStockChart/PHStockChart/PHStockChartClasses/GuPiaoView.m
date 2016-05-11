@@ -82,7 +82,7 @@
 -(void)initWithChartStyle:(PHChartstyle)style isShiZiXianShown:(BOOL)shown {
     
     _chartStyle = style;
-    _isShiZiXianShown = shadow;
+    _isShiZiXianShown = shown;
     
 }
 
