@@ -31,16 +31,15 @@
     
     
     _gupiaoV = fns;
-    
-    _gupiaoV.isShiZiXianShown = YES;
-    
+     [_gupiaoV initWithChartStyle:PHChartStyleFenShiTu isShiZiXianShown:YES];
+    _gupiaoV.isZoomMode = YES;
     
     [self settingData];
     [self settudata];
     
     
-    [_gupiaoV initWithChartStyle:PHChartStyleLaZhuTu];
-    _gupiaoV.laZhuTuSubStyle = PHLaZhuTuSubstyleVR;
+
+    _gupiaoV.laZhuTuSubStyle = PHLaZhuTuSubstyleVOL;
     
     _gupiaoV.backgroundColor = [UIColor whiteColor];
     _isFullScreen = NO;

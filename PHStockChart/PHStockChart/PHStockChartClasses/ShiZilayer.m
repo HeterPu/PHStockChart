@@ -18,6 +18,8 @@
 
 @property (nonatomic,assign) CGFloat percentage;
 
+@property (nonatomic,assign) PHShiZiStyle shiZiStyle ;
+
 @end
 
 
@@ -36,14 +38,39 @@
 }
 
 
+-(void)initWithShiZiStyle:(PHShiZiStyle)style {
+    
+    _shiZiStyle = style;
+    
+
+}
+
+
 #pragma mark - 重绘图层
 -(void)drawInContext:(CGContextRef)ctx {
+    
+    
+    if (_shiZiStyle == PHShiZiStyleFenShiTu) {
+        
+        [self styleFenShi:ctx];
+    }
+    else
+    {
+    
+        [self styleLaZhuTu:ctx];
+    }
+    
+
+}
+
+
+-(void)styleFenShi:(CGContextRef)ctx {
     
     CGFloat lineWidth = self.lineWidth;
     CGFloat padding = 5;
     CGFloat buttonPadding = 20;
-    CGFloat squareH = (VIEW_SIZE.height - 2 * padding - buttonPadding) / 6;
-
+    CGFloat squareH = (VIEW_SIZE.height - 3 * padding - buttonPadding) / 5;
+    
     //竖线
     CGContextMoveToPoint(ctx, _x, padding + 1);
     CGContextAddLineToPoint(ctx, _x, padding);
@@ -53,7 +80,43 @@
     CGContextMoveToPoint(ctx, _x, padding + 1 );
     CGContextAddLineToPoint(ctx, _x, padding + 4 * squareH);
     CGContextStrokePath(ctx);
-  
+    
+    CGContextMoveToPoint(ctx, _x, 2 * padding + buttonPadding + 4 * squareH);
+    CGContextAddLineToPoint(ctx, _x, VIEW_SIZE.height - padding);
+    CGContextStrokePath(ctx);
+    
+    
+    
+    CGFloat y = padding + (1 - _percentage) * 4 * squareH;
+    
+    //横线
+    CGContextMoveToPoint(ctx, _x, y);
+    CGContextAddLineToPoint(ctx, padding, y);
+    CGContextStrokePath(ctx);
+    
+    CGContextMoveToPoint(ctx, _x, y);
+    CGContextAddLineToPoint(ctx, VIEW_SIZE.width - padding , y);
+    CGContextStrokePath(ctx);
+}
+
+
+-(void)styleLaZhuTu:(CGContextRef)ctx {
+    
+    CGFloat lineWidth = self.lineWidth;
+    CGFloat padding = 5;
+    CGFloat buttonPadding = 20;
+    CGFloat squareH = (VIEW_SIZE.height - 2 * padding - buttonPadding) / 6;
+    
+    //竖线
+    CGContextMoveToPoint(ctx, _x, padding + 1);
+    CGContextAddLineToPoint(ctx, _x, padding);
+    CGContextSetLineWidth(ctx, lineWidth);
+    CGContextStrokePath(ctx);
+    
+    CGContextMoveToPoint(ctx, _x, padding + 1 );
+    CGContextAddLineToPoint(ctx, _x, padding + 4 * squareH);
+    CGContextStrokePath(ctx);
+    
     CGContextMoveToPoint(ctx, _x, 2 * padding + 4 * squareH);
     CGContextAddLineToPoint(ctx, _x, VIEW_SIZE.height - buttonPadding);
     CGContextStrokePath(ctx);
@@ -66,14 +129,11 @@
     CGContextMoveToPoint(ctx, _x, y);
     CGContextAddLineToPoint(ctx, padding, y);
     CGContextStrokePath(ctx);
-   
+    
     CGContextMoveToPoint(ctx, _x, y);
     CGContextAddLineToPoint(ctx, VIEW_SIZE.width - padding , y);
     CGContextStrokePath(ctx);
-
-
 }
-
 
 #pragma mark - 设置线宽默认值
 -(CGFloat)lineWidth {

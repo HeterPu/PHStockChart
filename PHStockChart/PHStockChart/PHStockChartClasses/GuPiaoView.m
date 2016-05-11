@@ -18,6 +18,8 @@
 #define squareH  (VIEW_SIZE.height - 2 * padding - buttompadding) / 6
 #define squareW  (VIEW_SIZE.width- 2 *padding) / 4
 
+#define squareH1  (VIEW_SIZE.height - 3 * padding - buttompadding) / 5
+
 @interface GuPiaoView ()
 
 
@@ -77,9 +79,10 @@
 
 @implementation GuPiaoView
 
--(void)initWithChartStyle:(PHChartstyle)style {
+-(void)initWithChartStyle:(PHChartstyle)style isShiZiXianShown:(BOOL)shown {
     
     _chartStyle = style;
+    _isShiZiXianShown = shadow;
     
 }
 
@@ -89,6 +92,7 @@
 - (void)drawRect:(CGRect)rect {
     
     if( _chartStyle == PHChartStyleFenShiTu){
+        
         [self setFangKuang];
         [self setBiaoQian];
         [self setVol1];
@@ -229,11 +233,15 @@
     shijian5.textColor = color(166, 166, 166, 1);
    
     if (self.isShiZiXianShown == YES) {
-        ShiZilayer *shizi = [[ShiZilayer alloc] init];
-        _shiZiLayer = shizi;
+        if (!_shiZiLayer) {
+            ShiZilayer *shizi = [[ShiZilayer alloc] init];
+            _shiZiLayer = shizi;
+            [self.layer addSublayer:shizi];
+        }
         _shiZiLayer.hidden = YES;
-        [self.layer addSublayer:shizi];
+        [_shiZiLayer initWithShiZiStyle:PHShiZiStyleFenShiTu];
     }
+    
     _zuigaoL = zuigaoL;
     _zuidiL = zuidiL;
     _zuigaoB = zuigaoB;
@@ -266,12 +274,6 @@
     _zuoShou = zuoshou;
     _jyzl.text= zongl;
     
-    if (self.isShiZiXianShown == YES) {
-         ShiZilayer *shizi = [[ShiZilayer alloc] init];
-         _shiZiLayer = shizi;
-         _shiZiLayer.hidden = YES;
-        [self.layer addSublayer:shizi];
-    }
 }
 
 
@@ -351,6 +353,18 @@
 
 //初始化蜡烛图
 -(void)initWithLZTarray:(NSArray *)lztarray    {
+    
+    
+    if (self.isShiZiXianShown == YES) {
+        
+        if (!_shiZiLayer) {
+            ShiZilayer *shizi = [[ShiZilayer alloc] init];
+            _shiZiLayer = shizi;
+           [self.layer addSublayer:shizi];
+        }
+            _shiZiLayer.hidden = YES;
+            [_shiZiLayer initWithShiZiStyle:PHShiZiStyleLaZhuTu];
+    }
     
     NSMutableArray *temptarra = [NSMutableArray array];
     
@@ -700,6 +714,7 @@
     if (self.isShiZiXianShown == YES) {
         _shiZiLayer.frame = CGRectMake(0, 0, VIEW_SIZE.width, VIEW_SIZE.height);
        [_shiZiLayer setNeedsDisplay];
+        
   }
 }
 
@@ -807,18 +822,18 @@
     CGContextRef  ctxSK =  UIGraphicsGetCurrentContext();
     CGContextMoveToPoint(ctxSK, padding, padding);
     CGContextAddLineToPoint(ctxSK, VIEW_SIZE.width - padding, padding);
-    CGContextAddLineToPoint(ctxSK, VIEW_SIZE.width - padding, padding + 4*squareH);
-    CGContextAddLineToPoint(ctxSK, padding, padding + 4*squareH);
+    CGContextAddLineToPoint(ctxSK, VIEW_SIZE.width - padding, padding + 4*squareH1);
+    CGContextAddLineToPoint(ctxSK, padding, padding + 4*squareH1);
     CGContextClosePath(ctxSK);
     CGContextSetLineWidth(ctxSK, 1);
     [color(239, 243, 244, 1) set];
     CGContextStrokePath(ctxSK);
     
     CGContextRef  ctxxK =  UIGraphicsGetCurrentContext();
-    CGContextMoveToPoint(ctxxK, padding, 2*padding + 4*squareH);
-    CGContextAddLineToPoint(ctxxK, VIEW_SIZE.width - padding, 2 * padding + 4*squareH);
-    CGContextAddLineToPoint(ctxxK, VIEW_SIZE.width - padding, VIEW_SIZE.height - buttompadding);
-    CGContextAddLineToPoint(ctxxK, padding, VIEW_SIZE.height - buttompadding);
+    CGContextMoveToPoint(ctxxK, padding, 2*padding + buttompadding + 4*squareH1);
+    CGContextAddLineToPoint(ctxxK, VIEW_SIZE.width - padding, 2*padding + buttompadding + 4*squareH1);
+    CGContextAddLineToPoint(ctxxK, VIEW_SIZE.width - padding, VIEW_SIZE.height - padding);
+    CGContextAddLineToPoint(ctxxK, padding, VIEW_SIZE.height - padding);
     CGContextClosePath(ctxxK);
     CGContextSetLineWidth(ctxxK, 1);
     [color(239, 243, 244, 1) set];
@@ -826,23 +841,23 @@
     
     CGFloat lengths[] = {2,2};
     CGContextRef  ctxr11 =  UIGraphicsGetCurrentContext();
-    CGContextMoveToPoint(ctxr11, padding, padding + squareH * 1 );
-    CGContextAddLineToPoint(ctxr11,VIEW_SIZE.width - padding, padding + squareH * 1 );
+    CGContextMoveToPoint(ctxr11, padding, padding + squareH1 * 1 );
+    CGContextAddLineToPoint(ctxr11,VIEW_SIZE.width - padding, padding + squareH1 * 1 );
     CGContextSetLineDash(ctxr11, 5.0f, lengths, sizeof(lengths)/sizeof(lengths[0]));
     CGContextSetLineWidth(ctxr11, 1);
     [color(239, 243, 244, 1) set];
     CGContextStrokePath(ctxr11);
     
     CGContextRef  ctxr12 =  UIGraphicsGetCurrentContext();
-    CGContextMoveToPoint(ctxr12, padding, padding + squareH * 2 );
-    CGContextAddLineToPoint(ctxr12,VIEW_SIZE.width - padding, padding + squareH * 2 );
+    CGContextMoveToPoint(ctxr12, padding, padding + squareH1 * 2 );
+    CGContextAddLineToPoint(ctxr12,VIEW_SIZE.width - padding, padding + squareH1 * 2 );
     CGContextSetLineWidth(ctxr12, 1);
     [color(239, 243, 244, 1) set];
     CGContextStrokePath(ctxr12);
     
     CGContextRef  ctxr13 =  UIGraphicsGetCurrentContext();
-    CGContextMoveToPoint(ctxr13, padding, padding + squareH * 3 );
-    CGContextAddLineToPoint(ctxr13,VIEW_SIZE.width - padding, padding + squareH * 3 );
+    CGContextMoveToPoint(ctxr13, padding, padding + squareH1 * 3 );
+    CGContextAddLineToPoint(ctxr13,VIEW_SIZE.width - padding, padding + squareH1 * 3 );
     CGContextSetLineWidth(ctxr13, 1);
     [color(239, 243, 244, 1) set];
     CGContextStrokePath(ctxr13);
@@ -850,36 +865,36 @@
     if(_isZoomMode == NO) {
 //ROW HIDE
         CGContextRef  ctxrH1 =  UIGraphicsGetCurrentContext();
-        CGContextMoveToPoint(ctxrH1, padding, padding + squareH / 2 * 1 );
-        CGContextAddLineToPoint(ctxrH1,VIEW_SIZE.width - padding, padding + squareH / 2 * 1 );
+        CGContextMoveToPoint(ctxrH1, padding, padding + squareH1 / 2 * 1 );
+        CGContextAddLineToPoint(ctxrH1,VIEW_SIZE.width - padding, padding + squareH1 / 2 * 1 );
         CGContextSetLineWidth(ctxrH1, 1);
         [color(239, 243, 244, 1) set];
         CGContextStrokePath(ctxrH1);
         
         CGContextRef  ctxrH2 =  UIGraphicsGetCurrentContext();
-        CGContextMoveToPoint(ctxrH2, padding, padding + squareH / 2 * 3 );
-        CGContextAddLineToPoint(ctxrH2,VIEW_SIZE.width - padding, padding + squareH / 2 * 3 );
+        CGContextMoveToPoint(ctxrH2, padding, padding + squareH1 / 2 * 3 );
+        CGContextAddLineToPoint(ctxrH2,VIEW_SIZE.width - padding, padding + squareH1 / 2 * 3 );
         CGContextSetLineWidth(ctxrH2, 1);
         [color(239, 243, 244, 1) set];
         CGContextStrokePath(ctxrH2);
         
         CGContextRef  ctxrH3 =  UIGraphicsGetCurrentContext();
-        CGContextMoveToPoint(ctxrH3, padding, padding + squareH / 2 * 5 );
-        CGContextAddLineToPoint(ctxrH3,VIEW_SIZE.width - padding, padding + squareH / 2 * 5 );
+        CGContextMoveToPoint(ctxrH3, padding, padding + squareH1 / 2 * 5 );
+        CGContextAddLineToPoint(ctxrH3,VIEW_SIZE.width - padding, padding + squareH1 / 2 * 5 );
         CGContextSetLineWidth(ctxrH3, 1);
         [color(239, 243, 244, 1) set];
         CGContextStrokePath(ctxrH3);
         
         CGContextRef  ctxrH4 =  UIGraphicsGetCurrentContext();
-        CGContextMoveToPoint(ctxrH4, padding, padding + squareH / 2 * 7 );
-        CGContextAddLineToPoint(ctxrH4,VIEW_SIZE.width - padding, padding + squareH / 2 * 7 );
+        CGContextMoveToPoint(ctxrH4, padding, padding + squareH1 / 2 * 7 );
+        CGContextAddLineToPoint(ctxrH4,VIEW_SIZE.width - padding, padding + squareH1 / 2 * 7 );
         CGContextSetLineWidth(ctxrH4, 1);
         [color(239, 243, 244, 1) set];
         CGContextStrokePath(ctxrH4);
 //2row
         CGContextRef  ctxrH5 =  UIGraphicsGetCurrentContext();
-        CGContextMoveToPoint(ctxrH5, padding, 2 * padding + squareH * 5 );
-        CGContextAddLineToPoint(ctxrH5,VIEW_SIZE.width - padding, 2 * padding + squareH * 5 );
+        CGContextMoveToPoint(ctxrH5, padding, VIEW_SIZE.height - padding - squareH1 / 2 );
+        CGContextAddLineToPoint(ctxrH5,VIEW_SIZE.width - padding, VIEW_SIZE.height - padding - squareH1 / 2 );
         CGContextSetLineWidth(ctxrH5, 1);
         [color(239, 243, 244, 1) set];
         CGContextStrokePath(ctxrH5);
@@ -913,13 +928,13 @@
         {
             [color(56, 171, 36, 1) set];
         }
-        CGContextMoveToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot , padding + ( 1 - high) * 4 *squareH );
-        CGContextAddLineToPoint(ctx,padding + (3 + 4 * i) * lazhuUnitDot, padding + ( 1 - low) * 4 *squareH  );
+        CGContextMoveToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot , padding + ( 1 - high) * 4 *squareH1 );
+        CGContextAddLineToPoint(ctx,padding + (3 + 4 * i) * lazhuUnitDot, padding + ( 1 - low) * 4 *squareH1  );
         CGContextSetLineWidth(ctx, lazhuUnitDot);
         CGContextStrokePath(ctx);
     
-        CGContextMoveToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, padding + ( 1 - open) * 4 *squareH  );
-        CGContextAddLineToPoint(ctx,padding + (3 + 4 * i) * lazhuUnitDot, padding + ( 1 - close) * 4 *squareH );
+        CGContextMoveToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, padding + ( 1 - open) * 4 *squareH1  );
+        CGContextAddLineToPoint(ctx,padding + (3 + 4 * i) * lazhuUnitDot, padding + ( 1 - close) * 4 *squareH1 );
         CGContextSetLineWidth(ctx, lazhuCXwidth);
         CGContextStrokePath(ctx);
     }
@@ -931,28 +946,28 @@
     CGFloat m10lineStart = [_laZhuTuTransArray[0][5] floatValue];
     CGFloat m20lineStart  = [_laZhuTuTransArray[0][6] floatValue];
     
-    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, padding + ( 1 - m5lineStart) * 4 *squareH);
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, padding + ( 1 - m5lineStart) * 4 *squareH1);
     for (int i = 1; i < count; i++) {
         CGFloat m5line = [_laZhuTuTransArray[i][4] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, padding + ( 1 - m5line) * 4 *squareH);
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, padding + ( 1 - m5line) * 4 *squareH1);
     }
     [color(67, 188, 252, 1)  set];
     CGContextSetLineWidth(ctx, 0.5);
     CGContextStrokePath(ctx);
 //M10线
-    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, padding + ( 1 - m10lineStart) * 4 *squareH);
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, padding + ( 1 - m10lineStart) * 4 *squareH1);
     for (int i = 1; i < count; i++) {
         CGFloat m10line = [_laZhuTuTransArray[i][5] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, padding + ( 1 - m10line) * 4 *squareH);
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, padding + ( 1 - m10line) * 4 *squareH1);
     }
     [color(236, 194, 81, 1)  set];
     CGContextSetLineWidth(ctx, 0.5);
     CGContextStrokePath(ctx);
 //M20线
-    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, padding + ( 1 - m20lineStart) * 4 *squareH);
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, padding + ( 1 - m20lineStart) * 4 *squareH1);
     for (int i = 1; i < count; i++) {
         CGFloat m20line  = [_laZhuTuTransArray[i][6] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, padding + ( 1 - m20line) * 4 *squareH);
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, padding + ( 1 - m20line) * 4 *squareH1);
     }
     [color(224, 106, 237, 1)  set];
     CGContextSetLineWidth(ctx, 0.5);
@@ -978,9 +993,9 @@
     CGFloat lazhuCXwidth = lazhuUnitDot * 3;
     
     CGFloat startPointX = padding + (3 + 4 * index) * lazhuUnitDot;
-    CGFloat startPointY = VIEW_SIZE.height - buttompadding;
+    CGFloat startPointY = VIEW_SIZE.height - padding;
     CGFloat endPointX = padding + (3 + 4 * index) * lazhuUnitDot;
-    CGFloat endPointY = VIEW_SIZE.height  - buttompadding -  2 * squareH  * [percentage floatValue] ;
+    CGFloat endPointY = VIEW_SIZE.height  - padding -  squareH1  * [percentage floatValue] ;
     
     CGContextRef  ctx=  UIGraphicsGetCurrentContext();
     CGContextMoveToPoint(ctx, startPointX, startPointY);
@@ -997,26 +1012,26 @@
 -(void)setMACD{
     
     CGFloat lazhuUnitDot = (VIEW_SIZE.width - 2 * padding) / 324;
-    CGFloat startpointy = VIEW_SIZE.height - buttompadding - squareH;
+    CGFloat startpointy = VIEW_SIZE.height - padding - squareH1 / 2;
     
     int count  = (int) _macdArray.count;
     CGContextRef  ctx =  UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(ctx, 1);
     CGContextSetLineJoin(ctx, kCGLineJoinRound);
 //EMA12线
-    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _macdArray[0][0] floatValue] * squareH);
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _macdArray[0][0] floatValue] * squareH1 / 2);
     for (int i = 1; i < count; i++) {
         CGFloat ema12value = [_macdArray[i][0] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * ema12value);
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH1 / 2 * ema12value);
 }
     [color(97, 177, 209, 1)  set];
     CGContextStrokePath(ctx);
 //EMA26线
-    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _macdArray[0][1] floatValue] * squareH);
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _macdArray[0][1] floatValue] * squareH1/2);
 
     for (int i = 1; i < count; i++) {
         CGFloat ema26value = [_macdArray[i][1] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * ema26value);
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH1 /2 * ema26value);
 }
     [color(220, 200, 106, 1)  set];
      CGContextStrokePath(ctx);
@@ -1024,7 +1039,7 @@
     for (int i = 0; i < count; i++) {
         CGContextMoveToPoint(ctx, padding + (3 + 4 * i )* lazhuUnitDot, startpointy);
         CGFloat difnumber = [_macdArray[i][2] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i )* lazhuUnitDot, startpointy - squareH * difnumber);
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i )* lazhuUnitDot, startpointy - squareH1 / 2 * difnumber);
         if (difnumber < 0) {
             [color(81, 182, 64, 1) set ];
         }
@@ -1040,33 +1055,33 @@
 -(void)setKDJ {
     
     CGFloat lazhuUnitDot = (VIEW_SIZE.width - 2 * padding) / 324;
-    CGFloat startpointy = VIEW_SIZE.height - buttompadding;
+    CGFloat startpointy = VIEW_SIZE.height - padding;
     
     int count  = (int) _kdjArray.count;
     CGContextRef  ctx =  UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(ctx, 1);
     CGContextSetLineJoin(ctx, kCGLineJoinRound);
 //k
-    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _kdjArray[0][0] floatValue] * squareH * 2);
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _kdjArray[0][0] floatValue] * squareH1 );
     for (int i = 1; i < count; i++) {
         CGFloat kvalue = [_kdjArray[i][0] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * kvalue * 2);
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH1 * kvalue);
     }
     [color(213, 145, 225, 1)  set];
     CGContextStrokePath(ctx);
 //d
-    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _kdjArray[0][1] floatValue] * squareH * 2);
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _kdjArray[0][1] floatValue] * squareH1 );
     for (int i = 1; i < count; i++) {
         CGFloat dvalue = [_kdjArray[i][1] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * dvalue * 2);
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH1 * dvalue);
     }
     [color(83, 170, 210, 1)  set];
     CGContextStrokePath(ctx);
 //j
-    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _kdjArray[0][2] floatValue] * squareH * 2);
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _kdjArray[0][2] floatValue] * squareH1 );
     for (int i = 1; i < count; i++) {
         CGFloat jvalue = [_kdjArray[i][2] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * jvalue * 2);
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH1 * jvalue );
     }
     [color(218, 198, 214, 1)  set];
     CGContextStrokePath(ctx);
@@ -1078,33 +1093,33 @@
 -(void)setRSI {
     
     CGFloat lazhuUnitDot = (VIEW_SIZE.width - 2 * padding) / 324;
-    CGFloat startpointy = VIEW_SIZE.height - buttompadding;
+    CGFloat startpointy = VIEW_SIZE.height - padding;
     
     int count  = (int) _rsiArray.count;
     CGContextRef  ctx =  UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(ctx, 1);
     CGContextSetLineJoin(ctx, kCGLineJoinRound);
 //rsi1
-    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _rsiArray[0][0] floatValue] * squareH * 2);
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _rsiArray[0][0] floatValue] * squareH1);
     for (int i = 1; i < count; i++) {
         CGFloat rsi1value = [_rsiArray[i][0] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * rsi1value * 2);
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH1 * rsi1value );
     }
     [color(213, 145, 225, 1)  set];
     CGContextStrokePath(ctx);
 //rsi2
-    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _rsiArray[0][1] floatValue] * squareH * 2);
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _rsiArray[0][1] floatValue] * squareH1 );
     for (int i = 1; i < count; i++) {
         CGFloat rsi2value = [_rsiArray[i][1] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * rsi2value * 2);
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH1 * rsi2value );
     }
     [color(83, 170, 210, 1)  set];
     CGContextStrokePath(ctx);
 //rsi3
-    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _rsiArray[0][2] floatValue] * squareH * 2);
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _rsiArray[0][2] floatValue] * squareH1);
     for (int i = 1; i < count; i++) {
         CGFloat rsi3value = [_rsiArray[i][2] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * rsi3value * 2);
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH1 * rsi3value );
     }
     [color(218, 198, 214, 1)  set];
     CGContextStrokePath(ctx);
@@ -1115,33 +1130,33 @@
 -(void)setBIAS{
     
     CGFloat lazhuUnitDot = (VIEW_SIZE.width - 2 * padding) / 324;
-    CGFloat startpointy = VIEW_SIZE.height - buttompadding;
+    CGFloat startpointy = VIEW_SIZE.height - padding;
     
     int count  = (int) _biasArray.count;
     CGContextRef  ctx =  UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(ctx, 1);
     CGContextSetLineJoin(ctx, kCGLineJoinRound);
 //bias1
-    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _biasArray[0][0] floatValue] * squareH * 2);
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _biasArray[0][0] floatValue] * squareH1 );
     for (int i = 1; i < count; i++) {
         CGFloat bias1value = [_biasArray[i][0] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * bias1value * 2);
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH1 * bias1value );
     }
     [color(213, 145, 225, 1)  set];
     CGContextStrokePath(ctx);
 //bias2
-    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _biasArray[0][1] floatValue] * squareH * 2);
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _biasArray[0][1] floatValue] * squareH1 );
     for (int i = 1; i < count; i++) {
         CGFloat bias2value = [_biasArray[i][1] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * bias2value * 2);
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH1 * bias2value );
     }
     [color(83, 170, 210, 1)  set];
     CGContextStrokePath(ctx);
 //bias3
-    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _biasArray[0][2] floatValue] * squareH * 2);
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _biasArray[0][2] floatValue] * squareH1 );
     for (int i = 1; i < count; i++) {
         CGFloat bias3value = [_biasArray[i][2] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * bias3value * 2);
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH1 * bias3value );
     }
     [color(218, 198, 214, 1)  set];
     CGContextStrokePath(ctx);
@@ -1181,33 +1196,33 @@
 -(void)setCR{
     
     CGFloat lazhuUnitDot = (VIEW_SIZE.width - 2 * padding) / 324;
-    CGFloat startpointy = VIEW_SIZE.height - buttompadding;
+    CGFloat startpointy = VIEW_SIZE.height - padding;
     
     int count  = (int) _crArray.count;
     CGContextRef  ctx =  UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(ctx, 1);
     CGContextSetLineJoin(ctx, kCGLineJoinRound);
 //cr1
-    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _crArray[0][0] floatValue] * squareH * 2);
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _crArray[0][0] floatValue] * squareH1 );
     for (int i = 1; i < count; i++) {
         CGFloat cr1value = [_crArray[i][0] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * cr1value * 2);
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH1 * cr1value );
     }
     [color(213, 145, 225, 1)  set];
     CGContextStrokePath(ctx);
 //cr2
-    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _crArray[0][1] floatValue] * squareH * 2);
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _crArray[0][1] floatValue] * squareH1);
     for (int i = 1; i < count; i++) {
         CGFloat cr2value = [_crArray[i][1] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * cr2value * 2);
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH1 * cr2value);
     }
     [color(83, 170, 210, 1)  set];
     CGContextStrokePath(ctx);
 //cr3
-    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _crArray[0][2] floatValue] * squareH * 2);
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _crArray[0][2] floatValue] * squareH1 );
     for (int i = 1; i < count; i++) {
         CGFloat cr3value = [_crArray[i][2] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * cr3value * 2);
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH1 * cr3value);
     }
     [color(218, 198, 214, 1)  set];
     CGContextStrokePath(ctx);
@@ -1218,41 +1233,41 @@
 -(void)setDMI{
     
     CGFloat lazhuUnitDot = (VIEW_SIZE.width - 2 * padding) / 324;
-    CGFloat startpointy = VIEW_SIZE.height - buttompadding;
+    CGFloat startpointy = VIEW_SIZE.height - padding;
     
     int count  = (int) _dmiArray.count;
     CGContextRef  ctx =  UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(ctx, 1);
     CGContextSetLineJoin(ctx, kCGLineJoinRound);
 //dmi1
-    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _dmiArray[0][0] floatValue] * squareH * 2);
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _dmiArray[0][0] floatValue] * squareH1);
     for (int i = 1; i < count; i++) {
         CGFloat dmi1value = [_dmiArray[i][0] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * dmi1value * 2);
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH1 * dmi1value );
     }
     [color(213, 145, 225, 1)  set];
     CGContextStrokePath(ctx);
 //dmi2
-    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _dmiArray[0][1] floatValue] * squareH * 2);
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _dmiArray[0][1] floatValue] * squareH1);
     for (int i = 1; i < count; i++) {
         CGFloat dmi2value = [_dmiArray[i][1] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * dmi2value * 2);
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH1 * dmi2value );
     }
     [color(83, 170, 210, 1)  set];
     CGContextStrokePath(ctx);
 //dmi3
-    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _dmiArray[0][2] floatValue] * squareH * 2);
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _dmiArray[0][2] floatValue] * squareH1);
     for (int i = 1; i < count; i++) {
         CGFloat dmi3value = [_dmiArray[i][2] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * dmi3value * 2);
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH1 * dmi3value);
     }
     [color(218, 198, 214, 1)  set];
     CGContextStrokePath(ctx);
 //dmi4
-    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _dmiArray[0][3] floatValue] * squareH * 2);
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ _dmiArray[0][3] floatValue] * squareH1);
     for (int i = 1; i < count; i++) {
         CGFloat dmi4value = [_dmiArray[i][3] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * dmi4value * 2);
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH1 * dmi4value );
     }
     [color(245, 73, 108, 1)  set];
     CGContextStrokePath(ctx);
@@ -1504,25 +1519,25 @@
 -(void)drawTwoLine:(NSArray *)array {
     
     CGFloat lazhuUnitDot = (VIEW_SIZE.width - 2 * padding) / 324;
-    CGFloat startpointy = VIEW_SIZE.height - buttompadding;
+    CGFloat startpointy = VIEW_SIZE.height - padding;
     
     int count  = (int) array.count;
     CGContextRef  ctx =  UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(ctx, 1);
     CGContextSetLineJoin(ctx, kCGLineJoinRound);
 //line1
-    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ array[0][0] floatValue] * squareH * 2);
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ array[0][0] floatValue] * squareH1);
     for (int i = 1; i < count; i++) {
         CGFloat line1value = [array[i][0] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * line1value * 2);
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH1 * line1value );
     }
     [color(250, 202, 65, 1)  set];
     CGContextStrokePath(ctx);
 //line2
-    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ array[0][1] floatValue] * squareH * 2);
+    CGContextMoveToPoint(ctx, padding + 3 * lazhuUnitDot, startpointy - [ array[0][1] floatValue] * squareH1);
     for (int i = 1; i < count; i++) {
         CGFloat line2value = [array[i][1] floatValue];
-        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH * line2value * 2);
+        CGContextAddLineToPoint(ctx, padding + (3 + 4 * i) * lazhuUnitDot, startpointy - squareH1 * line2value );
     }
     [color(83, 170, 210, 1)  set];
     CGContextStrokePath(ctx);

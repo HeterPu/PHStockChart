@@ -126,14 +126,13 @@ typedef NS_ENUM(NSUInteger, PHLaZhuTuSubstyle) {
 
 
 
-
-
 /**
- *  初始化绘制图表的样式
- *
- *  @param style 绘制分时图或者蜡烛图
- */
--(void)initWithChartStyle:(PHChartstyle) style;
+*  初始化绘制图表的样式
+*
+*  @param style 绘制分时图或者蜡烛图
+*  @param shown 是否显示十字线
+*/
+-(void)initWithChartStyle:(PHChartstyle)style isShiZiXianShown:(BOOL)shown;
 
 
 /**
@@ -178,8 +177,6 @@ typedef NS_ENUM(NSUInteger, PHLaZhuTuSubstyle) {
  *  @param zhu     交易量数组
  */
 -(void)fenShiWithDaZheData:(NSArray *)dazhe xiaoZheData:(NSArray *)xiaozhe zhuData:(NSArray *)zhu ;
-
-
 
 
 #pragma mark - 蜡烛图初始化方法
