@@ -52,12 +52,10 @@
     
     CGContextMoveToPoint(ctx, _x, padding + 1 );
     CGContextAddLineToPoint(ctx, _x, padding + 4 * squareH);
-    CGContextSetLineWidth(ctx, lineWidth);
     CGContextStrokePath(ctx);
   
     CGContextMoveToPoint(ctx, _x, 2 * padding + 4 * squareH);
     CGContextAddLineToPoint(ctx, _x, VIEW_SIZE.height - buttonPadding);
-    CGContextSetLineWidth(ctx, lineWidth);
     CGContextStrokePath(ctx);
     
     
@@ -67,12 +65,10 @@
     //横线
     CGContextMoveToPoint(ctx, _x, y);
     CGContextAddLineToPoint(ctx, padding, y);
-    CGContextSetLineWidth(ctx, lineWidth);
     CGContextStrokePath(ctx);
    
     CGContextMoveToPoint(ctx, _x, y);
     CGContextAddLineToPoint(ctx, VIEW_SIZE.width - padding , y);
-    CGContextSetLineWidth(ctx, lineWidth);
     CGContextStrokePath(ctx);
 
 
