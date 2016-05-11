@@ -32,23 +32,18 @@
 -(void)setXvalue:(CGFloat)x andYvalue:(CGFloat)y {
     
     _x = x;
-    
     _percentage = y;
-    
 }
 
 
 -(void)initWithShiZiStyle:(PHShiZiStyle)style {
     
     _shiZiStyle = style;
-    
-
 }
 
 
 #pragma mark - 重绘图层
 -(void)drawInContext:(CGContextRef)ctx {
-    
     
     if (_shiZiStyle == PHShiZiStyleFenShiTu) {
         
@@ -56,11 +51,8 @@
     }
     else
     {
-    
         [self styleLaZhuTu:ctx];
     }
-    
-
 }
 
 
@@ -85,10 +77,7 @@
     CGContextAddLineToPoint(ctx, _x, VIEW_SIZE.height - padding);
     CGContextStrokePath(ctx);
     
-    
-    
     CGFloat y = padding + (1 - _percentage) * 4 * squareH;
-    
     //横线
     CGContextMoveToPoint(ctx, _x, y);
     CGContextAddLineToPoint(ctx, padding, y);
@@ -121,10 +110,7 @@
     CGContextAddLineToPoint(ctx, _x, VIEW_SIZE.height - buttonPadding);
     CGContextStrokePath(ctx);
     
-    
-    
     CGFloat y = padding + (1 - _percentage) * 4 * squareH;
-    
     //横线
     CGContextMoveToPoint(ctx, _x, y);
     CGContextAddLineToPoint(ctx, padding, y);
@@ -141,7 +127,6 @@
     if(!_lineWidth) {
         _lineWidth = 0.4;
     }
-    
     return _lineWidth;
 }
 
