@@ -38,7 +38,8 @@ typedef NS_ENUM(NSUInteger, PHShiZiStyle) {
  *  @param x 当前位置的x坐标
  *  @param y 当前位置的百分比，范围在 （0.00 - 1.00）之间
  */
--(void)setXvalue:(CGFloat) x  andYvalue:(CGFloat) y;
+-(void)setXvalue:(CGFloat) x
+       andYvalue:(CGFloat) y;
 
 
 /**

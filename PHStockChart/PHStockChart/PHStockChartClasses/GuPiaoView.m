@@ -9,43 +9,44 @@
 #import "GuPiaoView.h"
 #import "ShiZilayer.h"
 
-
-#define VIEW_SIZE  self.bounds.size
-#define color(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
+//GuPiaoView Macro
 
 #define padding  5
 #define buttompadding  20
-#define squareH  (VIEW_SIZE.height - 2 * padding - buttompadding) / 6
+#define VIEW_SIZE  self.bounds.size
 #define squareW  (VIEW_SIZE.width- 2 *padding) / 4
-
+#define squareH  (VIEW_SIZE.height - 2 * padding - buttompadding) / 6
 #define squareH1  (VIEW_SIZE.height - 3 * padding - buttompadding) / 5
+#define color(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
 @interface GuPiaoView ()
 
-
-@property (nonatomic,assign) PHChartstyle chartStyle ;
 @property (nonatomic,weak) ShiZilayer * shiZiLayer;
+@property (nonatomic,assign) PHChartstyle chartStyle;
+
 #pragma mark -- 分时图属性
-@property (nonatomic,strong) NSArray * daZhexData ;
-@property (nonatomic,strong) NSArray * xiaoZhexData ;
 @property (nonatomic,strong) NSArray * zhuData;
+@property (nonatomic,strong) NSArray * daZhexData;
+@property (nonatomic,strong) NSArray * xiaoZhexData;
+
 
 @property (nonatomic,strong) NSArray * fenShiVol;
 @property (nonatomic,strong) NSArray * fenShiDaZhe;
 @property (nonatomic,strong) NSArray * fenShiXiaoZhe;
 
-@property (nonatomic,assign) CGFloat zuoShou;
 
-@property (nonatomic,weak) UILabel * zuigaoL;
-@property (nonatomic,weak) UILabel * zuidiL;
+
 @property (nonatomic,weak) UILabel * jyzl;
-@property (nonatomic,weak) UILabel * zuigaoB;
 @property (nonatomic,weak) UILabel * zuidiB;
+@property (nonatomic,weak) UILabel * zuidiL;
+@property (nonatomic,weak) UILabel * zuigaoB;
+@property (nonatomic,weak) UILabel * zuigaoL;
 @property (nonatomic,weak) UILabel * shijian1;
 @property (nonatomic,weak) UILabel * shijian2;
 @property (nonatomic,weak) UILabel * shijian3;
 @property (nonatomic,weak) UILabel * shijian4;
 @property (nonatomic,weak) UILabel * shijian5;
+@property (nonatomic,assign) CGFloat zuoShou;
 
 
 #pragma mark -- 蜡烛图属性
@@ -66,10 +67,10 @@
 @property (nonatomic,strong) NSArray * trixArray;
 @property (nonatomic,strong) NSArray * emvArray;
 @property (nonatomic,strong) NSArray * wrArray;
-
+//whitespace for cciArray
 @property (nonatomic,strong) NSArray * psyArray;
 @property (nonatomic,strong) NSArray * dpoArray;
-
+//whitespace for bollArray
 @property (nonatomic,strong) NSArray * asiArray;
 
 #pragma mark -- 其它属性
@@ -79,11 +80,11 @@
 
 @implementation GuPiaoView
 
--(void)initWithChartStyle:(PHChartstyle)style isShiZiXianShown:(BOOL)shown {
+-(void)initWithChartStyle:(PHChartstyle)style
+         isShiZiXianShown:(BOOL)shown {
     
     _chartStyle = style;
     _isShiZiXianShown = shown;
-    
 }
 
 
@@ -269,21 +270,21 @@
 
 
 
--(void)initWithZuoShou:(CGFloat)zuoshou zongL:(NSString *)zongl {
+-(void)initWithZuoShou:(CGFloat)zuoshou
+                 zongL:(NSString *)zongl{
     
     _zuoShou = zuoshou;
     _jyzl.text= zongl;
-    
 }
 
 
 
--(void)fenShiWithDaZheData:(NSArray *)dazhe xiaoZheData:(NSArray *)xiaozhe zhuData:(NSArray *)zhu {
-
+-(void)fenShiWithDaZheData:(NSArray *)dazhe
+               xiaoZheData:(NSArray *)xiaozhe
+                   zhuData:(NSArray *)zhu {
+    _zhuData = zhu;
     _daZhexData = dazhe;
     _xiaoZhexData = xiaozhe;
-    _zhuData = zhu;
-    
     [self transferFenShiData];
 }
 
@@ -354,7 +355,6 @@
 //初始化蜡烛图
 -(void)initWithLZTarray:(NSArray *)lztarray    {
     
-    
     if (self.isShiZiXianShown == YES) {
         
         if (!_shiZiLayer) {
@@ -384,9 +384,9 @@
         for (NSNumber *num in arra) {
             NSNumber *temptNumber = [NSNumber numberWithFloat:(([ num floatValue] - _min_NUM )/ _max_NUM )];
             [tempt addObject:temptNumber];
-  }
+    }
             [temptarra addObject:tempt];
-}
+  }
     _laZhuTuTransArray = temptarra;
 }
 
@@ -477,7 +477,6 @@
 -(void)initWithROC:(NSArray *)rocarray {
     
     _rocArray = [self getLineArray:rocarray];
-    
 }
 
 
@@ -714,7 +713,6 @@
     if (self.isShiZiXianShown == YES) {
         _shiZiLayer.frame = CGRectMake(0, 0, VIEW_SIZE.width, VIEW_SIZE.height);
        [_shiZiLayer setNeedsDisplay];
-        
   }
 }
 
@@ -798,7 +796,9 @@
 }
 
 
--(void)zhutu1Index:(NSInteger)index redOrBlue:(BOOL)redOrBlue percenttage:(NSNumber *)percentage {
+-(void)zhutu1Index:(NSInteger)index
+         redOrBlue:(BOOL)redOrBlue
+       percenttage:(NSNumber *)percentage {
 
     CGFloat startPointX = padding  + squareW / 60 * index;
     CGFloat startPointY = VIEW_SIZE.height - buttompadding;
@@ -987,7 +987,9 @@
 }
 
 
--(void)zhutu2Index:(NSInteger)index redOrBlue:(BOOL)redOrBlue percenttage:(NSNumber *)percentage {
+-(void)zhutu2Index:(NSInteger)index
+         redOrBlue:(BOOL)redOrBlue
+       percenttage:(NSNumber *)percentage {
     
     CGFloat lazhuUnitDot = (VIEW_SIZE.width - 2 * padding) / 324;
     CGFloat lazhuCXwidth = lazhuUnitDot * 3;
@@ -1160,7 +1162,6 @@
     }
     [color(218, 198, 214, 1)  set];
     CGContextStrokePath(ctx);
-    
 }
 
 
@@ -1295,7 +1296,6 @@
 -(void)setTRIX{
    
     [self drawTwoLine:_trixArray];
-    
 }
 
 
@@ -1303,7 +1303,6 @@
 -(void)setEMV{
     
     [self drawTwoLine:_emvArray];
-    
 }
 
 
@@ -1312,7 +1311,6 @@
 -(void)setWR{
     
     [self drawTwoLine:_wrArray];
-    
 }
 
 
@@ -1371,7 +1369,8 @@
 
 #pragma  mark -- 触摸代理
 
--(void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+-(void)touchesMoved:(NSSet<UITouch *> *)touches
+          withEvent:(UIEvent *)event {
    
     
     
@@ -1415,9 +1414,7 @@
         
         [_shiZiLayer setXvalue:current.x andYvalue:[data floatValue]];
         [_shiZiLayer setNeedsDisplay];
-        
     }
-    
 }
 
 
@@ -1450,7 +1447,6 @@
     }
     
     return _isShiZiXianShown;
-    
 }
 
 
@@ -1460,7 +1456,6 @@
         _isZoomMode = NO;
     }
     return  _isZoomMode;
-    
 }
 
 

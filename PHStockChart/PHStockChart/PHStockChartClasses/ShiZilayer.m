@@ -29,8 +29,9 @@
 
 
 #pragma mark - 设置初始值
--(void)setXvalue:(CGFloat)x andYvalue:(CGFloat)y {
-    
+-(void)setXvalue:(CGFloat)x
+       andYvalue:(CGFloat)y
+{
     _x = x;
     _percentage = y;
 }

@@ -132,7 +132,8 @@ typedef NS_ENUM(NSUInteger, PHLaZhuTuSubstyle) {
 *  @param style 绘制分时图或者蜡烛图
 *  @param shown 是否显示十字线
 */
--(void)initWithChartStyle:(PHChartstyle)style isShiZiXianShown:(BOOL)shown;
+-(void)initWithChartStyle:(PHChartstyle)style
+         isShiZiXianShown:(BOOL)shown;
 
 
 /**
@@ -167,7 +168,8 @@ typedef NS_ENUM(NSUInteger, PHLaZhuTuSubstyle) {
  *  @param zuoshou 昨日收盘的股指
  *  @param zongl   实时成交的交易量
  */
--(void)initWithZuoShou:(CGFloat)zuoshou zongL:(NSString *)zongl;
+-(void)initWithZuoShou:(CGFloat)zuoshou
+                 zongL:(NSString *)zongl;
 
 /**
  *  初始化数据数组
@@ -176,7 +178,9 @@ typedef NS_ENUM(NSUInteger, PHLaZhuTuSubstyle) {
  *  @param xiaozhe 小折线数组
  *  @param zhu     交易量数组
  */
--(void)fenShiWithDaZheData:(NSArray *)dazhe xiaoZheData:(NSArray *)xiaozhe zhuData:(NSArray *)zhu ;
+-(void)fenShiWithDaZheData:(NSArray *)dazhe
+               xiaoZheData:(NSArray *)xiaozhe
+                   zhuData:(NSArray *)zhu ;
 
 
 #pragma mark - 蜡烛图初始化方法
