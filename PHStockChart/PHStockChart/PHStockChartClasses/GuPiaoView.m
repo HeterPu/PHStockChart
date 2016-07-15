@@ -581,6 +581,10 @@
 }
 
 
+-(void)initWithCCI:(NSArray *)cciarray {
+    
+}
+
 -(void)initWithPSY:(NSArray *)psyarray {
     
     _psyArray = [self getLineArray:psyarray];
@@ -593,11 +597,20 @@
 }
 
 
+-(void)initWithBOLL:(NSArray *)bollarray {
+    
+}
+
+
 -(void)initWithASI:(NSArray *)asiarray {
     
     _asiArray = [self getLineArray:asiarray];
 }
 
+
+-(void)initWithSAR:(NSArray *)sararray {
+    
+}
 
 
 #pragma mark -- 分时图绘图
