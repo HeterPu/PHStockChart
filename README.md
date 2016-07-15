@@ -47,7 +47,7 @@ You can also install documentation locally using [appledoc](https://github.com/t
 
 Requirements
 ==============
-This library requires `iOS 4.0+` and `Xcode 6.0+`.
+This library requires `iOS 6.0+` and `Xcode 6.0+`.
 
 
 License
