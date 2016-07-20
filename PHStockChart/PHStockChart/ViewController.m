@@ -27,7 +27,7 @@
     [super viewDidLoad];
     
     
-    GuPiaoView *fns = [[GuPiaoView alloc] initWithFrame:CGRectMake(0, 60, 300, 400)];
+    GuPiaoView *fns = [[GuPiaoView alloc] initWithFrame:CGRectMake(0, 60, 300, 200)];
     
     
     _gupiaoV = fns;
@@ -36,7 +36,6 @@
     
     [self settingData];
     [self settudata];
-    
     
 
     _gupiaoV.laZhuTuSubStyle = PHLaZhuTuSubstyleVOL;
@@ -50,6 +49,11 @@
     
     [self.view addSubview:fns];
     
+    UILabel *tips = [[UILabel alloc] initWithFrame:CGRectMake(60, 300, 200, 100)];
+    tips.text = @"DOUBLE TAP VIEW TO DISPLAY FULLSCREEN AND RECOVOER,双击视图可以全屏显示或恢复";
+    tips.numberOfLines = 4 ;
+    tips.font = [UIFont systemFontOfSize:14];
+    [self.view addSubview:tips];
 }
 
 
@@ -75,7 +79,7 @@
     [self setNeedsStatusBarAppearanceUpdate];
     [UIView animateWithDuration:2.0 animations:^{
         _gupiaoV.transform = CGAffineTransformMakeRotation(0);
-        _gupiaoV.frame = CGRectMake(0, 80, self.view.frame.size.width, 300);
+        _gupiaoV.frame = CGRectMake(0, 60, 300, 200);
         
         
     } completion:^(BOOL finished) {

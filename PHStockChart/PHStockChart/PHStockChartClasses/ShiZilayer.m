@@ -57,7 +57,7 @@
 }
 
 
--(void)styleFenShi:(CGContextRef)ctx {
+-(void)styleLaZhuTu:(CGContextRef)ctx {
     
     CGFloat lineWidth = self.lineWidth;
     CGFloat padding = 5;
@@ -90,7 +90,7 @@
 }
 
 
--(void)styleLaZhuTu:(CGContextRef)ctx {
+-(void)styleFenShi:(CGContextRef)ctx {
     
     CGFloat lineWidth = self.lineWidth;
     CGFloat padding = 5;

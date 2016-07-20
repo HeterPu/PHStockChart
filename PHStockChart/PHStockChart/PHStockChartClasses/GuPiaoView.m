@@ -914,6 +914,7 @@
     }
     
     if (self.isShiZiXianShown == YES) {
+        [_shiZiLayer initWithShiZiStyle:PHShiZiStyleLaZhuTu];
         _shiZiLayer.frame = CGRectMake(0, 0, VIEW_SIZE.width, VIEW_SIZE.height);
         [_shiZiLayer setNeedsDisplay];
     }
