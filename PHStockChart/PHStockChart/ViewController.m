@@ -28,7 +28,7 @@
     
     
     GuPiaoView *fns = [[GuPiaoView alloc] initWithFrame:CGRectMake(0, 60, 300, 200)];
-    PHChartstyle chartstyle = PHChartStyleLaZhuTu;
+    PHChartstyle chartstyle = PHChartStyleFenShiTu;
     _gupiaoV = fns;
      [_gupiaoV initWithChartStyle:chartstyle isShiZiXianShown:YES];
     _gupiaoV.isZoomMode = YES;
