@@ -28,14 +28,22 @@
     
     
     GuPiaoView *fns = [[GuPiaoView alloc] initWithFrame:CGRectMake(0, 60, 300, 200)];
-    
-    
+    PHChartstyle chartstyle = PHChartStyleLaZhuTu;
     _gupiaoV = fns;
-     [_gupiaoV initWithChartStyle:PHChartStyleFenShiTu isShiZiXianShown:YES];
+     [_gupiaoV initWithChartStyle:chartstyle isShiZiXianShown:YES];
     _gupiaoV.isZoomMode = YES;
     
-    [self settingData];
-    [self settudata];
+ // 设置绘制分时图或者蜡烛图的数据。设置完成可调用 setNeedsDisplay 进行重绘制股票图
+    
+    if (chartstyle == PHChartStyleFenShiTu){
+        [self settFenshidata];
+    }
+    else
+    {
+        [self setLazhuData];
+    }
+   
+    
     
 
     _gupiaoV.laZhuTuSubStyle = PHLaZhuTuSubstyleVOL;
@@ -124,7 +132,7 @@
 }
 
 
--(void)settudata {
+-(void)settFenshidata {
     
     
     [_gupiaoV initWithLabel];
@@ -153,7 +161,7 @@
 }
 
 
--(void)settingData {
+-(void)setLazhuData {
     
     
     

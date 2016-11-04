@@ -154,6 +154,7 @@
 				TargetAttributes = {
 					D0593C581CE173A50028C92B = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = G7LDTLLV6N;
 					};
 				};
 			};
@@ -317,6 +318,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = G7LDTLLV6N;
 				INFOPLIST_FILE = PHStockChart/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = peter.PHStockChart;
@@ -328,6 +330,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = G7LDTLLV6N;
 				INFOPLIST_FILE = PHStockChart/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = peter.PHStockChart;

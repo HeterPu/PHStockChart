@@ -347,6 +347,18 @@
     _zuigaoB.text = [NSString stringWithFormat:@"%.2f%%",maxOffSetValue * 100 / _zuoShou];
     _zuidiL.text = [NSString stringWithFormat:@"%.1f",low];
     _zuidiB.text = [NSString stringWithFormat:@"-%.2f%%",maxOffSetValue  * 100 / _zuoShou];
+    
+    if (self.isShiZiXianShown == YES) {
+        
+        if (!_shiZiLayer) {
+            ShiZilayer *shizi = [[ShiZilayer alloc] init];
+            _shiZiLayer = shizi;
+            [self.layer addSublayer:shizi];
+        }
+        _shiZiLayer.hidden = YES;
+        [_shiZiLayer initWithShiZiStyle:PHShiZiStyleFenShiTu];
+    }
+
 }
 
 
