@@ -1,9 +1,8 @@
 PHStockChart
 ==============
 
-[![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/ibireme/YYKit/master/LICENSE)&nbsp;
+[![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/HeterPu/PHStockChart/blob/master/LICENSE)&nbsp;
 [![CocoaPods](https://img.shields.io/badge/pod-1.3.0-yellow.svg)](https://cocoapods.org)&nbsp;
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)&nbsp;
 [![Platform](https://img.shields.io/badge/platform-iOS-lightgray.svg)](https://cocoapods.org)&nbsp;
 [![Support](https://img.shields.io/badge/support-iOS%206%2B%20-blue.svg?style=flat)](https://www.apple.com/nl/ios/)&nbsp;
 
@@ -32,12 +31,6 @@ Installation
 2. Run `pod install` or `pod update`.
 3. Import "GuPiaoView.h".
 
-
-### Carthage
-
-1. Add `github "PHStockChart"` to your Cartfile.
-2. Run `carthage update --platform ios` and add the framework to your project.
-4. Notice: carthage framework doesn't include webp component, if you want to support webp, use CocoaPods or install manually.
 
 
 
